@@ -217,6 +217,25 @@ try:
             count += 1
         print(f'  {count} listings')
         validate_scraped_listings([l for l in all_listings if l["source"] == "behrn"], "behrn", html)
+
+        # Fetch exact coordinates from Behrn detail pages
+        print('  Fetching exact coordinates from detail pages...')
+        behrn_coords = 0
+        for listing in all_listings:
+            if listing['source'] != 'behrn' or not listing.get('url'):
+                continue
+            try:
+                dr = requests.get(listing['url'], timeout=10)
+                coord_match = re.search(r'"property":\{"lat":([\d.]+),"lng":([\d.]+)', dr.text)
+                if coord_match:
+                    listing['lat'] = float(coord_match.group(1))
+                    listing['lon'] = float(coord_match.group(2))
+                    listing['precise'] = True
+                    behrn_coords += 1
+            except Exception:
+                pass
+            time.sleep(0.3)
+        print(f'    Got exact coordinates for {behrn_coords} Behrn listings')
 except Exception as e:
     print(f'  ERROR: {e}')
 
@@ -322,6 +341,11 @@ nom_geocode = RateLimiter(nominatim.geocode, min_delay_seconds=1.1)
 
 geocoded = 0
 for i, listing in enumerate(all_listings):
+    # Skip if already has precise coordinates (Behrn detail page extraction)
+    if listing.get('lat') and listing.get('precise'):
+        geocoded += 1
+        continue
+
     addr = listing['geocodeQuery'].replace('Orebro', 'Örebro').replace(' ,', ',').strip()
 
     # Always re-geocode with Google if key is available (most accurate, fast)
