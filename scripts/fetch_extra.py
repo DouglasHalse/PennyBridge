@@ -217,25 +217,6 @@ try:
             count += 1
         print(f'  {count} listings')
         validate_scraped_listings([l for l in all_listings if l["source"] == "behrn"], "behrn", html)
-
-        # Fetch exact coordinates from Behrn detail pages
-        print('  Fetching exact coordinates from detail pages...')
-        behrn_coords = 0
-        for listing in all_listings:
-            if listing['source'] != 'behrn' or not listing.get('url'):
-                continue
-            try:
-                dr = requests.get(listing['url'], timeout=10)
-                coord_match = re.search(r'"property":\{"lat":([\d.]+),"lng":([\d.]+)', dr.text)
-                if coord_match:
-                    listing['lat'] = float(coord_match.group(1))
-                    listing['lon'] = float(coord_match.group(2))
-                    listing['precise'] = True
-                    behrn_coords += 1
-            except Exception:
-                pass
-            time.sleep(0.3)
-        print(f'    Got exact coordinates for {behrn_coords} Behrn listings')
 except Exception as e:
     print(f'  ERROR: {e}')
 
@@ -401,6 +382,26 @@ existing_ids = {l['id'] for l in existing['listings']}
 new_only = [l for l in all_listings if l['id'] not in existing_ids]
 existing['listings'].extend(new_only)
 existing['total'] = len(existing['listings'])
+
+# Fetch exact coordinates for all Behrn listings (new and existing)
+print('\n=== Behrn exact coordinates ===')
+behrn_listings = [l for l in existing['listings'] if l['source'] == 'behrn' and l.get('url')]
+if behrn_listings:
+    behrn_fixed = 0
+    for listing in behrn_listings:
+        try:
+            dr = requests.get(listing['url'], timeout=10)
+            coord_match = re.search(r'"property":\{"lat":([\d.]+),"lng":([\d.]+)', dr.text)
+            if coord_match:
+                listing['lat'] = float(coord_match.group(1))
+                listing['lon'] = float(coord_match.group(2))
+                listing['precise'] = True
+                behrn_fixed += 1
+        except Exception:
+            pass
+        time.sleep(0.3)
+    print(f'  Fixed coordinates for {behrn_fixed}/{len(behrn_listings)} Behrn listings')
+
 existing['geocoded'] = sum(1 for l in existing['listings'] if l.get('lat'))
 existing['notFound'] = existing['total'] - existing['geocoded']
 
