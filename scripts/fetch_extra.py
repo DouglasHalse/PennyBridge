@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Fetch non-Momentum landlords and merge into listings.json"""
-import json, re, hashlib, time, requests
+import json, re, hashlib, time, requests, os
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 from validate import validate_scraped_listings
+
+GEOAPIFY_KEY = "b6f995767b844f73871eb632ebee3d12"
+GOOGLE_KEY = os.environ.get("GOOGLE_GEOCODE_KEY", "")
 
 all_listings = []
 
@@ -272,7 +275,7 @@ except:
     cache = {}
 
 nominatim = Nominatim(user_agent='pennybridge-map')
-geocode = RateLimiter(nominatim.geocode, min_delay_seconds=1.1)
+nom_geocode = RateLimiter(nominatim.geocode, min_delay_seconds=1.1)
 
 geocoded = 0
 for i, listing in enumerate(all_listings):
@@ -280,19 +283,36 @@ for i, listing in enumerate(all_listings):
     if addr in cache:
         listing['lat'] = cache[addr].get('lat')
         listing['lon'] = cache[addr].get('lon')
+        listing['precise'] = cache[addr].get('precise', False)
         if listing.get('lat'): geocoded += 1
         continue
-    try:
-        loc = geocode(addr, timeout=10)
-        if loc:
-            listing['lat'] = loc.latitude
-            listing['lon'] = loc.longitude
-            cache[addr] = {'lat': loc.latitude, 'lon': loc.longitude, 'precise': True}
-            geocoded += 1
-    except:
-        pass
+
+    result = None
+    if GOOGLE_KEY:
+        result = _google_geocode(addr)
+    if not result:
+        result = _geoapify_geocode(addr)
+    if not result:
+        result = _nominatim_geocode(addr, nom_geocode)
+
+    if result:
+        lat, lon, precise = result
+        listing['lat'] = lat
+        listing['lon'] = lon
+        listing['precise'] = precise
+        cache[addr] = {'lat': lat, 'lon': lon, 'precise': precise}
+        geocoded += 1
+    else:
+        cache[addr] = {'lat': None, 'lon': None, 'precise': False}
+
     if (i + 1) % 10 == 0:
+        with open('data/geocode-cache.json', 'w', encoding='utf-8') as f:
+            json.dump(cache, f, ensure_ascii=False, indent=2)
         print(f'  {geocoded}/{len(all_listings)}')
+    time.sleep(0.15)
+
+with open('data/geocode-cache.json', 'w', encoding='utf-8') as f:
+    json.dump(cache, f, ensure_ascii=False, indent=2)
 
 print(f'  {geocoded}/{len(all_listings)} geocoded')
 
@@ -326,3 +346,46 @@ for src in sorted(existing['landlords'].keys()):
     print(f'  {l["name"]:20s}: {l["count"]:3d} listings, {gc} geocoded')
 print(f'  {"Total":20s}: {existing["total"]:3d}')
 print(f'  Added new: {len(new_only)}, skipped duplicates: {len(all_listings) - len(new_only)}')
+
+
+def _google_geocode(addr):
+    try:
+        r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params={
+            'address': addr, 'key': GOOGLE_KEY
+        }, timeout=10)
+        r.raise_for_status()
+        d = r.json()
+        if d['status'] == 'OK':
+            loc = d['results'][0]['geometry']['location']
+            precise = d['results'][0]['geometry'].get('location_type') == 'ROOFTOP'
+            return (loc['lat'], loc['lng'], precise)
+    except Exception:
+        pass
+    return None
+
+
+def _geoapify_geocode(addr):
+    try:
+        r = requests.get('https://api.geoapify.com/v1/geocode/search', params={
+            'text': addr, 'format': 'json', 'apiKey': GEOAPIFY_KEY, 'limit': 1
+        }, timeout=10)
+        r.raise_for_status()
+        results = r.json().get('results', [])
+        if results:
+            res = results[0]
+            precise = res.get('result_type') == 'building'
+            return (res['lat'], res['lon'], precise)
+    except Exception:
+        pass
+    return None
+
+
+def _nominatim_geocode(addr, geocode_fn):
+    try:
+        loc = geocode_fn(addr, addressdetails=True)
+        if loc:
+            cls = loc.raw.get('class', '')
+            return (loc.latitude, loc.longitude, cls not in ('highway',))
+    except Exception:
+        pass
+    return None
