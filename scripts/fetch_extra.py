@@ -8,6 +8,11 @@ from validate import validate_scraped_listings
 GEOAPIFY_KEY = "b6f995767b844f73871eb632ebee3d12"
 GOOGLE_KEY = os.environ.get("GOOGLE_GEOCODE_KEY", "")
 
+# Manual coordinate overrides for addresses Google geocodes incorrectly
+COORDINATE_OVERRIDES = {
+    "Västra Nobelgatan 20, Örebro, Sweden": (59.2792, 15.1974),
+}
+
 
 def _google_geocode(addr):
     try:
@@ -328,6 +333,15 @@ for i, listing in enumerate(all_listings):
         continue
 
     addr = listing['geocodeQuery'].replace('Orebro', 'Örebro').replace(' ,', ',').strip()
+
+    # Check manual coordinate overrides
+    if addr in COORDINATE_OVERRIDES:
+        lat, lon = COORDINATE_OVERRIDES[addr]
+        listing['lat'] = lat
+        listing['lon'] = lon
+        listing['precise'] = True
+        geocoded += 1
+        continue
 
     # Always re-geocode with Google if key is available (most accurate, fast)
     if addr in cache:
