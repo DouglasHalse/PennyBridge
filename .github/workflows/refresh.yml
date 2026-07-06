@@ -2,8 +2,11 @@ name: Daily Refresh
 
 on:
   schedule:
-    - cron: '0 4 * * *'   # 04:00 UTC
-  workflow_dispatch:        # manual trigger
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   fetch:
@@ -28,11 +31,19 @@ jobs:
       - name: Fetch extra (WP/HTML scrapers)
         run: python scripts/fetch_extra.py
 
+      - name: Prepare deploy directory
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+          cp -r css deploy/
+          cp -r js deploy/
+          cp -r data deploy/
+          cp README.md deploy/
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./deploy
           publish_branch: gh-pages
           force_orphan: true
-          exclude_assets: '.github,scripts,.gitignore,README.md,data/geocode-cache.json,data/snapshots'
