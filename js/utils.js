@@ -9,11 +9,7 @@ const STRINGS = {
     'Showing':         { sv: 'Visar', en: 'Showing' },
     'of':              { sv: 'av', en: 'of' },
     'All':             { sv: 'Alla', en: 'All' },
-    'All areas':       { sv: 'Alla områden', en: 'All areas' },
     'All landlords':   { sv: 'Alla värdar', en: 'All landlords' },
-    'All tags':        { sv: 'Alla taggar', en: 'All tags' },
-    'Area':            { sv: 'Område', en: 'Area' },
-    'Type':            { sv: 'Typ', en: 'Type' },
     'Landlord':        { sv: 'Värd', en: 'Landlord' },
     'Max price':       { sv: 'Maxpris', en: 'Max price' },
     'kr/month':        { sv: 'kr/mån', en: 'kr/mo' },
@@ -56,6 +52,8 @@ function getLang() { return currentLang; }
 // === Formatting ===
 function formatDate(dateStr) {
     if (!dateStr) return '—';
+    // Skip free-text availability strings
+    if (!/^\d{4}-\d{2}-\d{2}/.test(dateStr) && !/^\d{4}-\d{2}-\d{2}T/.test(dateStr)) return dateStr;
     const d = new Date(dateStr);
     const locale = currentLang === 'sv' ? 'sv-SE' : 'en-GB';
     return d.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
@@ -104,8 +102,6 @@ function getRoomLabel(type) {
 }
 
 // === Tags ===
-const TAG_KEYS = ['student', 'senior', 'youth', 'quick-pick'];
-
 function getTagLabel(tag) {
     return t(tag);
 }
@@ -113,11 +109,6 @@ function getTagLabel(tag) {
 // === Generate listing URL ===
 function getListingUrl(listing) {
     if (listing.url && listing.url.startsWith('http')) return listing.url;
-    // Fallback for Momentum: construct URL
-    if (['obo', 'ragnfast', 'soderberg'].includes(listing.source)) {
-        const type = listing._type_id || 'residential';
-        return 'https://minasidor.' + listing.source.replace('ragnfast', 'ragnfast').replace('soderberg', 'soderberg') + '.se/market/' + type + '/' + listing.id.split('_').pop();
-    }
     return '#';
 }
 

@@ -210,6 +210,57 @@ try:
 except Exception as e:
     print(f'  ERROR: {e}')
 
+# --- Heimstaden ---
+print('\n=== Heimstaden ===')
+try:
+    r = requests.get('https://www.heimstaden.com/se/lediga-bostader/orebro/', timeout=20)
+    html = r.text
+    cards = re.findall(
+        r'<h4 class=\"object-teaser-picture-card__content-heading\">\s*(.*?)\s*</h4>'
+        r'\s*<p class=\"object-teaser-picture-card__content-pricing\">\s*(.*?)\s*</p>'
+        r'\s*<ul class=\"object-teaser-picture-card__content-list\">(.*?)</ul>'
+        r'.*?'
+        r'<a href=\"(https://heimstaden.com/se/sok-lagenhet/[^\"]*)\"',
+        html, re.DOTALL
+    )
+    img_urls = re.findall(r'<img[^>]*src=\"(https://heimstaden.com/app/uploads/heimstaden-ose/[^\"]*)\"', html)
+    count = 0
+    for i, (addr_raw, price_raw, list_html, link) in enumerate(cards):
+        addr = addr_raw.strip()
+        price_str = re.sub(r'[^\d]', '', price_raw.split('kr')[0]) if 'kr' in price_raw else ''
+        price = float(price_str) if price_str else None
+        
+        items = re.findall(r'<span>([^<]*)</span>\s*([^<]*)</li>', list_html)
+        traits = {}
+        for label, value in items:
+            traits[label.strip().rstrip(':').lower()] = value.strip()
+        
+        rooms = traits.get('rum', '')
+        sqm_str = traits.get('storlek', '').replace('kvm', '').replace('m²', '').replace(',', '.').strip()
+        sqm = float(re.sub(r'[^\d.]', '', sqm_str)) if sqm_str else None
+        available = traits.get('tillgänglig', '')
+        # Only use as date if it looks like YYYY-MM-DD
+        if available and not re.match(r'\d{4}-\d{2}-\d{2}', available):
+            available = None
+        
+        listing = {
+            'id': f'heimstaden_{hashlib.md5(addr.encode()).hexdigest()[:8]}',
+            'source': 'heimstaden', 'displayName': addr, 'address': addr,
+            'geocodeQuery': f'{addr}, Örebro, Sweden',
+            'type': rooms, 'shortType': '',
+            'sqm': sqm, 'price': price, 'availableFrom': available,
+            'image': img_urls[i] if i < len(img_urls) else None,
+            'imageBase': '',
+            'area': '', 'areaPath': [], 'number': '',
+            'url': link, 'description': '', 'tags': [],
+        }
+        all_listings.append(listing)
+        count += 1
+    print(f'  {count} listings')
+    validate_scraped_listings([l for l in all_listings if l["source"] == "heimstaden"], "heimstaden", html)
+except Exception as e:
+    print(f'  ERROR: {e}')
+
 print(f'\n=== Total new: {len(all_listings)} ===')
 
 # --- Geocode new listings ---

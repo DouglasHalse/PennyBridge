@@ -1,0 +1,36 @@
+name: Daily Refresh
+
+on:
+  schedule:
+    - cron: '0 4 * * *'   # 04:00 UTC
+  workflow_dispatch:        # manual trigger
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests geopy
+
+      - name: Fetch all listings
+        env:
+          GOOGLE_GEOCODE_KEY: ${{ secrets.GOOGLE_GEOCODE_KEY }}
+        run: python scripts/fetch_listings.py
+
+      - name: Fetch extra (WP/HTML scrapers)
+        run: python scripts/fetch_extra.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          force_orphan: true
+          exclude_assets: '.github,scripts,.gitignore,README.md,data/geocode-cache.json,data/snapshots'
