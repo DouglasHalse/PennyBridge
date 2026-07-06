@@ -272,12 +272,12 @@ def fetch_husherren():
                 "sqm": sqm,
                 "price": rent_val,
                 "availableFrom": avail_raw,
-                "image": None,
+                "image": _extract_husherren_image(obj_html),
                 "imageBase": "",
                 "area": area_name,
                 "areaPath": [area_name] if area_name else [],
                 "number": "",
-                "url": "https://husherren.realportal.nu/common/portal.php?menuid=109&pageid=117",
+                "url": _extract_husherren_url(obj_html),
                 "description": "",
                 "tags": detect_tags_husherren(address, area_name, rooms_raw),
             })
@@ -375,7 +375,7 @@ def fetch_egeryds():
                 "sqm": float(area_match.group(1)) if area_match else None,
                 "price": float(rent_match.group(1).replace(" ", "")) if rent_match else None,
                 "availableFrom": move_match.group(1) if move_match else None,
-                "image": img_match.group(1) if img_match else None,
+                "image": _fix_relative_url(img_match.group(1), "egerydsfastigheter.se") if img_match else None,
                 "imageBase": "",
                 "area": "",
                 "areaPath": [],
@@ -421,6 +421,33 @@ def detect_tags_husherren(address, area, rooms):
     if "ungdom" in combined:
         tags.append("youth")
     return tags
+
+
+def _extract_husherren_url(obj_html):
+    """Extract individual object URL from Husherren card HTML (single-quoted href)."""
+    BASE = "https://husherren.realportal.nu"
+    link_match = re.search(r"<a[^>]*href='([^']*)'", obj_html)
+    if link_match:
+        rel_url = link_match.group(1).replace("&amp;", "&")
+        return BASE + rel_url if rel_url.startswith("/") else rel_url
+    return f"{BASE}/common/portal.php?menuid=109&pageid=117"
+
+
+def _extract_husherren_image(obj_html):
+    """Extract image URL from Husherren card HTML (single-quoted src)."""
+    BASE = "https://husherren.realportal.nu"
+    img_match = re.search(r"<img[^>]*src='([^']*)'", obj_html)
+    if img_match:
+        rel_url = img_match.group(1).replace("&amp;", "&")
+        return BASE + rel_url if rel_url.startswith("/") else rel_url
+    return None
+
+
+def _fix_relative_url(url, domain):
+    """Prepend https://domain to relative URLs."""
+    if url and url.startswith("/"):
+        return f"https://{domain}{url}"
+    return url
 
 
 def geocode_addresses(spots):
