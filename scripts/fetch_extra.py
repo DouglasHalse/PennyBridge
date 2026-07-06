@@ -323,10 +323,24 @@ nom_geocode = RateLimiter(nominatim.geocode, min_delay_seconds=1.1)
 geocoded = 0
 for i, listing in enumerate(all_listings):
     addr = listing['geocodeQuery'].replace('Orebro', 'Örebro').replace(' ,', ',').strip()
+
+    # Use cached value, but re-geocode with Google if available and entry is not ROOFTOP-precise
     if addr in cache:
-        listing['lat'] = cache[addr].get('lat')
-        listing['lon'] = cache[addr].get('lon')
-        listing['precise'] = cache[addr].get('precise', False)
+        cached = cache[addr]
+        if GOOGLE_KEY and cached.get('precise') is not True:
+            # Re-try with Google for better precision
+            result = _google_geocode(addr)
+            if result:
+                lat, lon, precise = result
+                listing['lat'] = lat
+                listing['lon'] = lon
+                listing['precise'] = precise
+                cache[addr] = {'lat': lat, 'lon': lon, 'precise': precise}
+                geocoded += 1
+                continue
+        listing['lat'] = cached.get('lat')
+        listing['lon'] = cached.get('lon')
+        listing['precise'] = cached.get('precise', False)
         if listing.get('lat'): geocoded += 1
         continue
 
