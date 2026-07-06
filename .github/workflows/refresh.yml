@@ -21,7 +21,9 @@ jobs:
       - name: Fetch all listings
         env:
           GOOGLE_GEOCODE_KEY: ${{ secrets.GOOGLE_GEOCODE_KEY }}
-        run: python scripts/fetch_listings.py
+        run: |
+          mkdir -p data
+          python scripts/fetch_listings.py
 
       - name: Fetch extra (WP/HTML scrapers)
         run: python scripts/fetch_extra.py
