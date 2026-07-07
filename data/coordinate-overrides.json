@@ -1,3 +1,38 @@
 {
-  "Västra Nobelgatan 20, Örebro, Sweden": [59.2792, 15.1974]
+  "Västra Nobelgatan 20, Örebro, Sweden": [
+    59.2792,
+    15.1974
+  ],
+  "Brygghusgatan 12, Örebro, Sweden": [
+    59.25741241632697,
+    15.213197171688082
+  ],
+  "Brygghusgatan 10, Örebro, Sweden": [
+    59.25685163316297,
+    15.212698280811312
+  ],
+  "Tärnvägen 8D Studentlägenhet, Örebro, Sweden": [
+    59.25850790498063,
+    15.257263183593752
+  ],
+  "Studentlägenheter Tärnvägen 22-30, Örebro, Sweden": [
+    59.258779372318436,
+    15.258325338363647
+  ],
+  "Lillbackavägen 8, Örebro, Sweden": [
+    59.25377058891079,
+    15.195392668247225
+  ],
+  "Spannlandsgatan 39 C, Örebro, Sweden": [
+    59.27240754281191,
+    15.16494154930115
+  ],
+  "Spannlandsgatan 48  C, Örebro, Sweden": [
+    59.27167569151265,
+    15.171990394592287
+  ],
+  "Spannlandsgatan 21 D, Örebro, Sweden": [
+    59.27189634496484,
+    15.166220963001253
+  ]
 }

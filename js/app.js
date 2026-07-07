@@ -26,6 +26,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         const daysOld = (Date.now() - genDate) / (1000 * 60 * 60 * 24);
         if (daysOld > 7) console.warn(`Data is ${Math.round(daysOld)} days old`);
 
+        // Apply coordinate overrides if available
+        try {
+            const or = await fetch('data/coordinate-overrides.json');
+            if (or.ok) {
+                const overrides = await or.json();
+                let applied = 0;
+                for (const [addr, coords] of Object.entries(overrides)) {
+                    const normAddr = addr.replace('Orebro', 'Örebro').replace(' ,', ',').trim();
+                    allData.listings.forEach(l => {
+                        const key = (l.geocodeQuery || '').replace('Orebro', 'Örebro').replace(' ,', ',').trim();
+                        if (key === normAddr) {
+                            l.lat = coords[0];
+                            l.lon = coords[1];
+                            l.precise = true;
+                            applied++;
+                        }
+                    });
+                }
+                if (applied > 0) console.log(`Applied ${applied} coordinate overrides to ${Object.keys(overrides).length} addresses`);
+            }
+        } catch(e) {}
+
         // Count by landlord
         const landlordCounts = {};
         allData.listings.forEach(l => {
