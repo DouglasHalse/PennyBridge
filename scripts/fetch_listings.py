@@ -128,12 +128,15 @@ def normalize_momentum(item, config):
     size = item.get("size", {})
     display_name = item.get("displayName", "")
 
-    # Determine city from areaPath (first element is the city)
+    # Determine city: use areaPath[0] only if it looks like a city (not a district)
     area_path = [a.get("displayName", "") for a in loc.get("areaPath", [])]
-    city = area_path[0] if area_path else config["city"]
-    # Map Swedish city names properly (capitalize first letter only)
-    city_map = {"orebro": "Örebro", "nora": "Nora", "kumla": "Kumla"}
-    city = city_map.get(city.lower(), city)
+    first_area = area_path[0] if area_path else ""
+    # Known cities outside Örebro that appear in areaPath
+    non_orebro_cities = {"nora", "kumla", "lindesberg", "karlskoga", "eskilstuna"}
+    if first_area.lower() in non_orebro_cities:
+        city = first_area
+    else:
+        city = config["city"]
 
     # Build geocode query
     street = display_name.strip()
