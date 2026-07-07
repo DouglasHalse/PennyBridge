@@ -106,7 +106,7 @@
             'egeryds': 'Egeryds', 'heimstaden': 'Heimstaden'
         };
 
-        let map, allData, allMarkers = [], changes = [], selectedMarker = null;
+        let allData, allMarkers = [], changes = [], selectedMarker = null, existingOverrides = {};
 
         async function init() {
             map = L.map('map', { center: MAP_CENTER, zoom: 14 });
@@ -117,8 +117,20 @@
             try {
                 const r = await fetch('data/listings.json');
                 allData = await r.json();
+                // Load existing overrides if available
+                try {
+                    const or = await fetch('data/coordinate-overrides.json');
+                    if (or.ok) existingOverrides = await or.json();
+                } catch(e) {}
+                // Apply existing overrides to data
+                if (existingOverrides) {
+                    for (const [addr, coords] of Object.entries(existingOverrides)) {
+                        const match = allData.listings.filter(l => l.geocodeQuery && l.geocodeQuery.replace('Orebro','Örebro').includes(addr.split(',')[0]));
+                        match.forEach(l => { l.lat = coords[0]; l.lon = coords[1]; l.precise = true; });
+                    }
+                }
                 document.getElementById('stats').textContent =
-                    `${allData.total} listings · ${allData.geocoded} geocoded`;
+                    `${allData.total} listings · ${allData.geocoded} geocoded · ${Object.keys(existingOverrides).length} overrides`;
                 addAllMarkers();
             } catch(e) {
                 document.getElementById('stats').textContent = 'Error loading data: ' + e.message;
@@ -241,27 +253,29 @@
                 alert('No changes to save.');
                 return;
             }
-            // Apply all changes to data
+            // Build overrides from changes
+            const overrides = {...existingOverrides};
             changes.forEach(c => {
                 const l = allData.listings.find(x => x.id === c.id);
-                if (l) {
+                if (l && l.geocodeQuery) {
+                    const addr = l.geocodeQuery.replace('Orebro', 'Örebro').replace(' ,', ',');
+                    overrides[addr] = [c.newLat, c.newLon];
                     l.lat = c.newLat;
                     l.lon = c.newLon;
                     l.precise = true;
                 }
             });
-            allData.geocoded = allData.listings.filter(l => l.lat).length;
-            allData.generated = new Date().toISOString();
-            allData.total = allData.listings.length;
-
-            // Download
-            const blob = new Blob([JSON.stringify(allData, null, 2)], {type: 'application/json'});
+            // Download overrides file
+            const blob = new Blob([JSON.stringify(overrides, null, 2)], {type: 'application/json'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'listings.json';
+            a.download = 'coordinate-overrides.json';
             a.click();
+            existingOverrides = overrides;
             changes = [];
             updateChangelog();
+            document.getElementById('stats').textContent =
+                `${allData.total} listings · ${allData.geocoded} geocoded · ${Object.keys(overrides).length} overrides`;
         }
 
         function copyCoords() {

@@ -8,10 +8,16 @@ from validate import validate_scraped_listings
 GEOAPIFY_KEY = "b6f995767b844f73871eb632ebee3d12"
 GOOGLE_KEY = os.environ.get("GOOGLE_GEOCODE_KEY", "")
 
-# Manual coordinate overrides for addresses Google geocodes incorrectly
-COORDINATE_OVERRIDES = {
-    "Västra Nobelgatan 20, Örebro, Sweden": (59.2792, 15.1974),
-}
+# Load persistent coordinate overrides from file (edit this file to add fixes)
+OVERRIDES_PATH = Path(__file__).parent.parent / "data" / "coordinate-overrides.json"
+COORDINATE_OVERRIDES = {}
+try:
+    if OVERRIDES_PATH.exists():
+        with open(OVERRIDES_PATH, encoding="utf-8") as f:
+            COORDINATE_OVERRIDES = json.load(f)
+        print(f"Loaded {len(COORDINATE_OVERRIDES)} coordinate overrides")
+except Exception:
+    pass
 
 
 def _google_geocode(addr):
@@ -336,7 +342,11 @@ for i, listing in enumerate(all_listings):
 
     # Check manual coordinate overrides
     if addr in COORDINATE_OVERRIDES:
-        lat, lon = COORDINATE_OVERRIDES[addr]
+        val = COORDINATE_OVERRIDES[addr]
+        if isinstance(val, list):
+            lat, lon = val[0], val[1]
+        else:
+            lat, lon = val
         listing['lat'] = lat
         listing['lon'] = lon
         listing['precise'] = True
