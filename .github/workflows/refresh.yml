@@ -38,6 +38,7 @@ jobs:
         run: |
           mkdir -p deploy
           cp index.html deploy/
+          cp editor.html deploy/
           cp -r css deploy/
           cp -r js deploy/
           cp -r data deploy/
