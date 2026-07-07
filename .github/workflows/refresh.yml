@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   fetch:
@@ -22,6 +23,7 @@ jobs:
         run: pip install requests geopy
 
       - name: Fetch all listings
+        id: fetch_main
         env:
           GOOGLE_GEOCODE_KEY: ${{ secrets.GOOGLE_GEOCODE_KEY }}
         run: |
@@ -29,6 +31,7 @@ jobs:
           python scripts/fetch_listings.py
 
       - name: Fetch extra (WP/HTML scrapers)
+        id: fetch_extra
         run: python scripts/fetch_extra.py
 
       - name: Prepare deploy directory
@@ -47,3 +50,32 @@ jobs:
           publish_dir: ./deploy
           publish_branch: gh-pages
           force_orphan: true
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `⚠️ **Daily Refresh failed**\n\nPennyBridge pipeline failed on ${new Date().toISOString().split('T')[0]}.\n\nCheck logs: ${runUrl}\n\nLive site may be serving stale data from the last successful run.`;
+
+            // Check if an issue already exists for today
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['pipeline-failure'],
+            });
+
+            const todayLabel = new Date().toISOString().split('T')[0];
+            const existing = issues.find(i => i.title.includes(todayLabel));
+
+            if (!existing) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `Pipeline failed — ${todayLabel}`,
+                body,
+                labels: ['pipeline-failure'],
+              });
+            }
