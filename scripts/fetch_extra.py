@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fetch non-Momentum landlords and merge into listings.json"""
 import json, re, hashlib, time, requests, os
+from pathlib import Path
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 from validate import validate_scraped_listings
