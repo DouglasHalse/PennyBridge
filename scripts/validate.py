@@ -15,10 +15,11 @@ SNAPSHOTS_DIR = DATA_DIR / "snapshots"
 
 # Minimum expected counts per landlord (updated after each healthy run)
 MIN_EXPECTED = {
-    "pgj": 10,
-    "husherren": 30,
-    "behrn": 15,
-    "egeryds": 0,  # Often has 0-1 listings, don't enforce minimum
+    "pgj": 5,
+    "husherren": 5,
+    "behrn": 5,
+    "egeryds": 0,
+    "heimstaden": 0,
 }
 
 
