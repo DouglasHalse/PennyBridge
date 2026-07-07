@@ -127,7 +127,13 @@ def normalize_momentum(item, config):
     loc = item.get("location", {})
     size = item.get("size", {})
     display_name = item.get("displayName", "")
-    city = config["city"]
+
+    # Determine city from areaPath (first element is the city)
+    area_path = [a.get("displayName", "") for a in loc.get("areaPath", [])]
+    city = area_path[0] if area_path else config["city"]
+    # Map Swedish city names properly (capitalize first letter only)
+    city_map = {"orebro": "Örebro", "nora": "Nora", "kumla": "Kumla"}
+    city = city_map.get(city.lower(), city)
 
     # Build geocode query
     street = display_name.strip()
@@ -152,7 +158,7 @@ def normalize_momentum(item, config):
         "image": item.get("thumbnail", {}).get("exists") and item["id"] or None,
         "imageBase": config["api"].replace("/v2/market/objects", ""),
         "area": item.get("location", {}).get("area", {}).get("displayName", ""),
-        "areaPath": [a.get("displayName", "") for a in loc.get("areaPath", [])],
+        "areaPath": area_path,
         "number": item.get("number", ""),
         "signNumber": (loc.get("signNumber") or "").strip(),
         "description": item.get("description", ""),
@@ -250,11 +256,14 @@ def fetch_husherren():
             sqm = float(rooms_match.group(2)) if rooms_match else None
 
             full_addr = text_clean[1] if len(text_clean) > 1 else address
-            # Extract postcode: "70366 Orebro"
-            postcode = ""
-            post_match = re.search(r'(\d{5})\s+\w+', full_addr)
+            # Extract postcode + city: "70366 Örebro" or "63219 Eskilstuna"
+            post_match = re.search(r'(\d{5})\s+(\w+)', full_addr)
             if post_match:
                 postcode = post_match.group(1)
+                city_from_addr = post_match.group(2)
+                geocode_query = f"{address}, {postcode} {city_from_addr}, Sweden"
+            else:
+                geocode_query = f"{address}, Örebro, Sweden"
 
             rent_raw = text_clean[2].replace("Periodhyra:", "").strip() if len(text_clean) > 2 else ""
             rent_val = float(rent_raw.replace(" ", "").replace(",", ".")) if rent_raw else None
@@ -266,7 +275,7 @@ def fetch_husherren():
                 "source": "husherren",
                 "displayName": address,
                 "address": address,
-                "geocodeQuery": f"{address}, {postcode} Orebro, Sweden" if postcode else f"{address}, Orebro, Sweden",
+                "geocodeQuery": geocode_query,
                 "type": f"{rooms_num} rum och kök" if rooms_num else rooms_raw,
                 "shortType": f"{rooms_num} RK" if rooms_num else "",
                 "sqm": sqm,
