@@ -203,21 +203,21 @@ async function submitReport(listingId) {
     const expected = input?.value?.trim();
     if (!expected) return;
 
-    // Find the listing from markers
     const entry = allMarkers.find(m => m.listing?.id === listingId);
     if (!entry) return;
 
-    const btn = form.querySelector('button');
-    btn.textContent = '...';
-    btn.disabled = true;
-
-    const ok = await submitLocationReport(entry.listing, expected);
-    if (ok) {
-        input.value = '';
-        form.style.display = 'none';
-        btn.textContent = '✓ ' + (getLang() === 'sv' ? 'Skickat' : 'Sent');
-    } else {
-        btn.textContent = getLang() === 'sv' ? 'Fel! Försök igen' : 'Error! Retry';
-    }
-    setTimeout(() => { btn.textContent = t('Report'); btn.disabled = false; }, 2000);
+    const l = entry.listing;
+    const title = encodeURIComponent(`📍 Wrong location: ${l.displayName}`);
+    const body = encodeURIComponent(
+        `**Listing:** ${l.displayName}\n` +
+        `**Landlord:** ${getLandlordMeta(l.source).name}\n` +
+        `**Current position:** ${l.lat?.toFixed(6)}, ${l.lon?.toFixed(6)}\n` +
+        `**Address used:** ${l.geocodeQuery}\n\n` +
+        `**Expected:** ${expected}\n\n` +
+        `---\n_Reported via PennyBridge map_`
+    );
+    const url = `https://github.com/DouglasHalse/PennyBridge/issues/new?title=${title}&body=${body}&labels=location-report`;
+    window.open(url, '_blank');
+    input.value = '';
+    form.style.display = 'none';
 }
