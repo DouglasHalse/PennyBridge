@@ -205,19 +205,34 @@ async function submitReport(listingId) {
 
     const entry = allMarkers.find(m => m.listing?.id === listingId);
     if (!entry) return;
-
     const l = entry.listing;
-    const title = encodeURIComponent(`📍 Wrong location: ${l.displayName}`);
-    const body = encodeURIComponent(
-        `**Listing:** ${l.displayName}\n` +
-        `**Landlord:** ${getLandlordMeta(l.source).name}\n` +
-        `**Current position:** ${l.lat?.toFixed(6)}, ${l.lon?.toFixed(6)}\n` +
-        `**Address used:** ${l.geocodeQuery}\n\n` +
-        `**Expected:** ${expected}\n\n` +
-        `---\n_Reported via PennyBridge map_`
-    );
-    const url = `https://github.com/DouglasHalse/PennyBridge/issues/new?title=${title}&body=${body}&labels=location-report`;
-    window.open(url, '_blank');
-    input.value = '';
-    form.style.display = 'none';
+
+    const btn = form.querySelector('button');
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    try {
+        const r = await fetch('https://douglashalse.com/api/report.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                listing: l.displayName,
+                landlord: getLandlordMeta(l.source).name,
+                lat: String(l.lat?.toFixed(6) || ''),
+                lon: String(l.lon?.toFixed(6) || ''),
+                query: l.geocodeQuery || '',
+                expected: expected
+            })
+        });
+        if (r.ok) {
+            input.value = '';
+            form.style.display = 'none';
+            btn.textContent = '✓ ' + (getLang() === 'sv' ? 'Skickat' : 'Sent');
+        } else {
+            btn.textContent = getLang() === 'sv' ? 'Fel! Försök igen' : 'Error! Retry';
+        }
+    } catch(e) {
+        btn.textContent = getLang() === 'sv' ? 'Fel! Försök igen' : 'Error! Retry';
+    }
+    setTimeout(() => { btn.textContent = t('Report'); btn.disabled = false; }, 2000);
 }
