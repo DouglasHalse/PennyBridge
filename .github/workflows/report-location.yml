@@ -1,0 +1,54 @@
+name: Report Wrong Location
+
+on:
+  workflow_dispatch:
+    inputs:
+      listing:
+        description: 'Listing name'
+        required: true
+      landlord:
+        description: 'Landlord name'
+        required: true
+      current_lat:
+        description: 'Current latitude'
+        required: true
+      current_lon:
+        description: 'Current longitude'
+        required: true
+      geocode_query:
+        description: 'Geocode query used'
+        required: true
+      expected:
+        description: 'Expected location description'
+        required: true
+
+permissions:
+  issues: write
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { listing, landlord, current_lat, current_lon, geocode_query, expected } = context.payload.inputs;
+            const title = `📍 Wrong location: ${listing}`;
+            const body = [
+              `**Listing:** ${listing}`,
+              `**Landlord:** ${landlord}`,
+              `**Current position:** ${current_lat}, ${current_lon}`,
+              `**Address used:** ${geocode_query}`,
+              `**Expected:** ${expected}`,
+              '',
+              '---',
+              '_Reported via PennyBridge map_'
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['location-report'],
+            });

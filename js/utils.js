@@ -138,3 +138,26 @@ function getReportUrl(listing) {
     );
     return `https://github.com/DouglasHalse/PennyBridge/issues/new?title=${title}&body=${body}&labels=location-report`;
 }
+
+async function submitLocationReport(listing, expected) {
+    const payload = {
+        ref: 'main',
+        inputs: {
+            listing: listing.displayName,
+            landlord: getLandlordMeta(listing.source).name,
+            current_lat: String(listing.lat?.toFixed(6) || ''),
+            current_lon: String(listing.lon?.toFixed(6) || ''),
+            geocode_query: listing.geocodeQuery || '',
+            expected: expected
+        }
+    };
+    try {
+        const r = await fetch(
+            'https://api.github.com/repos/DouglasHalse/PennyBridge/actions/workflows/report-location.yml/dispatches',
+            { method: 'POST', headers: { 'Accept': 'application/vnd.github.v3+json' }, body: JSON.stringify(payload) }
+        );
+        return r.ok;
+    } catch(e) {
+        return false;
+    }
+}
