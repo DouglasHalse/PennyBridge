@@ -28,12 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // --- Process request ---
 
-// Get raw POST body (some hosts block php://input, try $_POST fallback)
+// Accept JSON or form-encoded (Hostinger blocks php://input for JSON)
 $rawInput = file_get_contents('php://input');
 $input = json_decode($rawInput, true);
-if (!$input && !empty($_POST)) {
-    // Fallback: form-encoded
-    $input = $_POST;
+if (!$input) {
+    $input = $_POST; // form-encoded fallback
 }
 
 // Honeypot check (after we have $input)

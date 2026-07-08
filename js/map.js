@@ -213,17 +213,18 @@ async function submitReport(listingId) {
     btn.disabled = true;
 
     try {
+        const body = new URLSearchParams({
+            listing: l.displayName,
+            landlord: getLandlordMeta(l.source).name,
+            lat: String(l.lat?.toFixed(6) || ''),
+            lon: String(l.lon?.toFixed(6) || ''),
+            query: l.geocodeQuery || '',
+            expected: expected
+        });
         const r = await fetch('https://douglashalse.com/api/report.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                listing: l.displayName,
-                landlord: getLandlordMeta(l.source).name,
-                lat: String(l.lat?.toFixed(6) || ''),
-                lon: String(l.lon?.toFixed(6) || ''),
-                query: l.geocodeQuery || '',
-                expected: expected
-            })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body
         });
         if (r.ok) {
             input.value = '';
