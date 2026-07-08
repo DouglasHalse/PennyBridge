@@ -319,6 +319,55 @@ try:
 except Exception as e:
     print(f'  ERROR: {e}')
 
+# --- HomeQ ---
+print('\n=== HomeQ ===')
+try:
+    r = requests.post('https://api.homeq.se/api/v3/cards/', json={
+        'card_pin': False, 'card_type': 'normal',
+        'geo_bounds': {'min_lat': 59.23, 'max_lat': 59.32, 'min_lng': 15.12, 'max_lng': 15.30},
+        'amount': 200
+    }, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, timeout=20)
+    data = r.json()
+    cards = data.get('results', [])
+    count = 0
+    seen = set()
+    for c in cards:
+        if c.get('type') != 'individual': continue
+        title = c.get('title', '')
+        if not title: continue
+        key = f"{title}_{c.get('rent')}"
+        if key in seen: continue
+        seen.add(key)
+        rooms = c.get('rooms', 0)
+        rooms_str = f'{int(rooms)} rum och kök' if rooms and rooms == int(rooms) else ''
+        images = c.get('images', [])
+        listing = {
+            'id': f'homeq_{c["id"]}',
+            'source': 'homeq', 'displayName': title, 'address': title,
+            'geocodeQuery': f'{title}, {c.get("city", "Örebro")}, Sweden',
+            'type': rooms_str,
+            'shortType': f'{int(rooms)} RK' if rooms and rooms == int(rooms) else '',
+            'sqm': c.get('area'),
+            'price': c.get('rent'),
+            'availableFrom': c.get('date_access'),
+            'image': images[0].get('image') if images else None,
+            'imageBase': '',
+            'area': c.get('city', ''),
+            'areaPath': [c.get('city', ''), str(c.get('references', {}).get('company', ''))],
+            'number': '', 'description': '',
+            'url': f'https://homeq.se{c.get("uri")}' if c.get('uri') else 'https://homeq.se',
+            'tags': ['quick-apply'] if c.get('is_quick_apply') else [],
+            'lat': c.get('location', {}).get('lat'),
+            'lon': c.get('location', {}).get('lon'),
+            'precise': True,
+        }
+        all_listings.append(listing)
+        count += 1
+    print(f'  {count} listings')
+    # HomeQ provides exact coordinates, no validation needed for 0-count
+except Exception as e:
+    print(f'  ERROR: {e}')
+
 print(f'\n=== Total new: {len(all_listings)} ===')
 
 # --- Geocode new listings ---
@@ -430,8 +479,8 @@ if behrn_listings:
 existing['geocoded'] = sum(1 for l in existing['listings'] if l.get('lat'))
 existing['notFound'] = existing['total'] - existing['geocoded']
 
-colors = {'obo': '#cf0035', 'ragnfast': '#224b91', 'soderberg': '#862633', 'pgj': '#2e7d32', 'husherren': '#e65100', 'behrn': '#1b232d', 'egeryds': '#6a1b9a'}
-names = {'obo': 'Örebrobostäder', 'ragnfast': 'Ragnfast', 'soderberg': 'Söderberg', 'pgj': 'PG Jönsson', 'husherren': 'Husherren', 'behrn': 'Behrn', 'egeryds': 'Egeryds'}
+colors = {'obo': '#cf0035', 'ragnfast': '#224b91', 'soderberg': '#862633', 'pgj': '#2e7d32', 'husherren': '#e65100', 'behrn': '#1b232d', 'egeryds': '#6a1b9a', 'heimstaden': '#00558b', 'homeq': '#00bcd4'}
+names = {'obo': 'Örebrobostäder', 'ragnfast': 'Ragnfast', 'soderberg': 'Söderberg', 'pgj': 'PG Jönsson', 'husherren': 'Husherren', 'behrn': 'Behrn', 'egeryds': 'Egeryds', 'heimstaden': 'Heimstaden', 'homeq': 'HomeQ'}
 existing['landlords'] = {}
 for src in sorted(colors.keys()):
     cnt = sum(1 for l in existing['listings'] if l['source'] == src)

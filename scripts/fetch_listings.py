@@ -48,6 +48,7 @@ LANDLORD_NAMES = {
     "behrn":     "Behrn",
     "egeryds":   "Egeryds",
     "heimstaden":"Heimstaden",
+    "homeq":     "HomeQ",
 }
 
 MOMENTUM_SOURCES = {

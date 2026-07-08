@@ -77,6 +77,7 @@ const LANDLORD_META = {
     'behrn':     { name: 'Behrn', color: '#1b232d', short: 'BEH' },
     'egeryds':   { name: 'Egeryds', color: '#6a1b9a', short: 'EGY' },
     'heimstaden':{ name: 'Heimstaden', color: '#00558b', short: 'HEM' },
+    'homeq':     { name: 'HomeQ', color: '#00bcd4', short: 'HQ' },
 };
 
 function getLandlordMeta(source) {
