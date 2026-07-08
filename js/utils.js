@@ -122,3 +122,17 @@ function getThumbnailUrl(listing) {
     }
     return null;
 }
+
+// === Report wrong location ===
+function getReportUrl(listing) {
+    const title = encodeURIComponent(`Wrong location: ${listing.displayName}`);
+    const body = encodeURIComponent(
+        `**Listing:** ${listing.displayName}\n` +
+        `**Landlord:** ${getLandlordMeta(listing.source).name}\n` +
+        `**Current position:** ${listing.lat?.toFixed(6)}, ${listing.lon?.toFixed(6)}\n` +
+        `**Address used for geocoding:** ${listing.geocodeQuery}\n\n` +
+        `**Expected location:** (describe where it should be)\n\n` +
+        `---\n_Reported via PennyBridge map_`
+    );
+    return `https://github.com/DouglasHalse/PennyBridge/issues/new?title=${title}&body=${body}&labels=location-report`;
+}
