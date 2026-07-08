@@ -97,6 +97,7 @@ function createPopupContent(listing) {
                 <a href="#" onclick="event.preventDefault();event.stopPropagation();toggleReportForm(this,'${listing.id}')" style="font-size:0.65rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report')}</a>
                 <div id="reportForm_${listing.id}" style="display:none;margin-top:4px;">
                     <input type="text" id="reportInput_${listing.id}" placeholder="${t('Report wrong location')}..." style="width:100%;padding:3px 6px;font-size:0.7rem;border:1px solid var(--border);border-radius:3px;">
+                    <input type="text" name="website" style="position:absolute;left:-9999px;tab-index:-1;" autocomplete="off" tabindex="-1">
                     <div style="display:flex;gap:4px;margin-top:3px;">
                         <button onclick="event.stopPropagation();submitReport('${listing.id}')" style="padding:2px 8px;font-size:0.65rem;background:var(--accent);color:#fff;border:none;border-radius:3px;cursor:pointer;">${t('Report')}</button>
                         <button onclick="event.stopPropagation();toggleReportForm(this,'${listing.id}')" style="padding:2px 8px;font-size:0.65rem;background:none;border:1px solid var(--border);border-radius:3px;cursor:pointer;color:var(--text-secondary);">✕</button>
