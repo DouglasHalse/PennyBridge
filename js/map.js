@@ -93,7 +93,7 @@ function createPopupContent(listing) {
             <a href="${url}" target="_blank" rel="noopener" class="popup-link">
                 ${t('View listing')} ↗
             </a>
-            <a href="${getReportUrl(listing)}" target="_blank" rel="noopener" style="display:block;margin-top:3px;font-size:0.65rem;color:var(--text-secondary);text-decoration:none;" title="Report wrong location">📍 ${t('Report wrong location')}</a>
+            <a href="${getReportUrl(listing)}" target="_blank" rel="noopener" style="display:block;margin-top:3px;font-size:0.65rem;color:var(--text-secondary);text-decoration:none;" title="${t('Report wrong location')}">📍 ${t('Report')}</a>
         </div>`;
 }
 

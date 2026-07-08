@@ -31,6 +31,8 @@ const STRINGS = {
     'senior':          { sv: 'Senior', en: 'Senior' },
     'youth':           { sv: 'Ungdom', en: 'Youth' },
     'quick-pick':      { sv: 'Snabbval', en: 'Quick pick' },
+    'Report wrong location': { sv: 'Rapportera fel plats', en: 'Report wrong location' },
+    'Report':          { sv: 'Rapportera', en: 'Report' },
 };
 
 let currentLang = localStorage.getItem(LANG_KEY) || 'en';

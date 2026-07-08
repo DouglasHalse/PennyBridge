@@ -269,7 +269,7 @@ function updateResultsList(listings) {
                 </p>
                 <a href="${getReportUrl(listing)}" target="_blank" rel="noopener"
                    style="font-size:0.6rem;color:var(--text-secondary);text-decoration:none;display:block;margin-top:1px;"
-                   onclick="event.stopPropagation()">📍 Report</a>
+                   onclick="event.stopPropagation()">📍 ${t('Report')}</a>
             </div>
         </div>`;
     }).join('');
