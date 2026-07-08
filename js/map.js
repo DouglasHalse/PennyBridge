@@ -190,8 +190,7 @@ async function submitReport(listingId, el) {
     if (!entry) return;
     const l = entry.listing;
 
-    const btn = document.getElementById('reportBtn_' + listingId);
-    if (btn) btn.textContent = '...';
+    if (el) el.textContent = '...';
 
     try {
         const body = new URLSearchParams({
@@ -207,9 +206,9 @@ async function submitReport(listingId, el) {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: body
         });
-        if (btn) btn.textContent = r.ok ? '✓ ' + t('Sent') : '✗';
+        if (el) el.textContent = r.ok ? '✓ ' + t('Sent') : '✗';
     } catch(e) {
-        if (btn) btn.textContent = '✗';
+        if (el) el.textContent = '✗';
     }
-    setTimeout(() => { if (btn) btn.textContent = '📍 ' + t('Report wrong location'); }, 2000);
+    setTimeout(() => { if (el) el.textContent = '📍 ' + t('Report wrong location'); }, 2000);
 }
