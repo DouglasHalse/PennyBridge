@@ -2,5 +2,6 @@ __pycache__/
 data/listings.json
 data/geocode-cache.json
 data/snapshots/
+api/report.php
 *.pyc
 .DS_Store
