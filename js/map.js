@@ -94,7 +94,7 @@ function createPopupContent(listing) {
                 ${t('View listing')} ↗
             </a>
             <div style="margin-top:4px;">
-                <a href="#" id="reportBtn_${listing.id}" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}')" style="font-size:0.65rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
+                <a href="#" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}',this)" style="font-size:0.65rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
             </div>
         </div>`;
 }
@@ -185,7 +185,7 @@ function unhighlightMapMarker() {
 }
 
 // --- Report wrong location ---
-async function submitReport(listingId) {
+async function submitReport(listingId, el) {
     const entry = allMarkers.find(m => m.listing?.id === listingId);
     if (!entry) return;
     const l = entry.listing;

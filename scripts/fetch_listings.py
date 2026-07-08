@@ -271,7 +271,7 @@ def fetch_husherren():
             rent_raw = text_clean[2].replace("Periodhyra:", "").strip() if len(text_clean) > 2 else ""
             rent_val = float(rent_raw.replace(" ", "").replace(",", ".")) if rent_raw else None
 
-            avail_raw = text_clean[3].replace("Tillganglig:", "").strip() if len(text_clean) > 3 else None
+            avail_raw = text_clean[3].replace("Tillgänglig:", "").replace("Tillganglig:", "").strip() if len(text_clean) > 3 else None
 
             items.append({
                 "id": f"husherren_{hashlib.md5(address.encode()).hexdigest()[:8]}",

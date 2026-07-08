@@ -268,7 +268,7 @@ function updateResultsList(listings) {
                        onclick="event.stopPropagation()">${t('View listing')} ↗</a>
                 </p>
                 <div style="margin-top:1px;">
-                    <a href="#" id="reportBtn_${listing.id}" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}')" style="font-size:0.6rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
+                    <a href="#" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}',this)" style="font-size:0.6rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
                 </div>
             </div>
         </div>`;
