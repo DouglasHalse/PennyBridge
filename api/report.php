@@ -26,38 +26,38 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// --- Spam protection ---
+// --- Process request ---
 
-// 1. Honeypot: hidden field bots auto-fill, humans never see
-if (!empty($_POST['website']) || !empty($_POST['url'])) {
-    http_response_code(200); // pretend success so bots don't retry
+// Get raw POST body (some hosts block php://input, try $_POST fallback)
+$rawInput = file_get_contents('php://input');
+$input = json_decode($rawInput, true);
+if (!$input && !empty($_POST)) {
+    // Fallback: form-encoded
+    $input = $_POST;
+}
+
+// Honeypot check (after we have $input)
+if (!empty($input['website']) || !empty($input['url'])) {
+    http_response_code(200);
     echo json_encode(['success' => true]);
     exit;
 }
 
-// 2. Rate limit: one submission per IP per 60 seconds
+// Rate limit: one submission per IP per 60 seconds
 $rateFile = __DIR__ . '/report_ratelimit.json';
 $ratelimit = file_exists($rateFile) ? json_decode(file_get_contents($rateFile), true) : [];
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $now = time();
-
-// Clean up old entries
 foreach ($ratelimit as $storedIp => $storedTime) {
     if ($now - $storedTime > 300) unset($ratelimit[$storedIp]);
 }
-
 if (isset($ratelimit[$ip]) && ($now - $ratelimit[$ip]) < 60) {
     http_response_code(429);
     echo json_encode(['error' => 'Too many requests, please wait']);
     exit;
 }
-
 $ratelimit[$ip] = $now;
 file_put_contents($rateFile, json_encode($ratelimit));
-
-// --- Process request ---
-
-$input = json_decode(file_get_contents('php://input'), true);
 
 $listing  = trim($input['listing'] ?? '');
 $landlord = trim($input['landlord'] ?? '');
