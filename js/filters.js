@@ -268,11 +268,7 @@ function updateResultsList(listings) {
                        onclick="event.stopPropagation()">${t('View listing')} ↗</a>
                 </p>
                 <div style="margin-top:1px;">
-                    <a href="#" onclick="event.preventDefault();event.stopPropagation();toggleReportForm(this,'${listing.id}')" style="font-size:0.6rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report')}</a>
-                    <div id="reportForm_${listing.id}" style="display:none;margin-top:2px;">
-                        <input type="text" id="reportInput_${listing.id}" placeholder="${t('Report wrong location')}..." style="width:100%;padding:2px 4px;font-size:0.65rem;border:1px solid var(--border);border-radius:3px;">
-                        <button onclick="event.stopPropagation();submitReport('${listing.id}')" style="margin-top:2px;padding:1px 6px;font-size:0.6rem;background:var(--accent);color:#fff;border:none;border-radius:3px;cursor:pointer;">${t('Report')}</button>
-                    </div>
+                    <a href="#" id="reportBtn_${listing.id}" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}')" style="font-size:0.6rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
                 </div>
             </div>
         </div>`;

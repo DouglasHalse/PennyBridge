@@ -94,15 +94,7 @@ function createPopupContent(listing) {
                 ${t('View listing')} ↗
             </a>
             <div style="margin-top:4px;">
-                <a href="#" onclick="event.preventDefault();event.stopPropagation();toggleReportForm(this,'${listing.id}')" style="font-size:0.65rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report')}</a>
-                <div id="reportForm_${listing.id}" style="display:none;margin-top:4px;">
-                    <input type="text" id="reportInput_${listing.id}" placeholder="${t('Report wrong location')}..." style="width:100%;padding:3px 6px;font-size:0.7rem;border:1px solid var(--border);border-radius:3px;">
-                    <input type="text" name="website" style="position:absolute;left:-9999px;tab-index:-1;" autocomplete="off" tabindex="-1">
-                    <div style="display:flex;gap:4px;margin-top:3px;">
-                        <button onclick="event.stopPropagation();submitReport('${listing.id}')" style="padding:2px 8px;font-size:0.65rem;background:var(--accent);color:#fff;border:none;border-radius:3px;cursor:pointer;">${t('Report')}</button>
-                        <button onclick="event.stopPropagation();toggleReportForm(this,'${listing.id}')" style="padding:2px 8px;font-size:0.65rem;background:none;border:1px solid var(--border);border-radius:3px;cursor:pointer;color:var(--text-secondary);">✕</button>
-                    </div>
-                </div>
+                <a href="#" id="reportBtn_${listing.id}" onclick="event.preventDefault();event.stopPropagation();submitReport('${listing.id}')" style="font-size:0.65rem;color:var(--text-secondary);text-decoration:none;">📍 ${t('Report wrong location')}</a>
             </div>
         </div>`;
 }
@@ -193,24 +185,13 @@ function unhighlightMapMarker() {
 }
 
 // --- Report wrong location ---
-function toggleReportForm(el, listingId) {
-    const form = document.getElementById('reportForm_' + listingId);
-    if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
-}
-
 async function submitReport(listingId) {
-    const input = document.getElementById('reportInput_' + listingId);
-    const form = document.getElementById('reportForm_' + listingId);
-    const expected = input?.value?.trim();
-    if (!expected) return;
-
     const entry = allMarkers.find(m => m.listing?.id === listingId);
     if (!entry) return;
     const l = entry.listing;
 
-    const btn = form.querySelector('button');
-    btn.textContent = '...';
-    btn.disabled = true;
+    const btn = document.getElementById('reportBtn_' + listingId);
+    if (btn) btn.textContent = '...';
 
     try {
         const body = new URLSearchParams({
@@ -219,22 +200,16 @@ async function submitReport(listingId) {
             lat: String(l.lat?.toFixed(6) || ''),
             lon: String(l.lon?.toFixed(6) || ''),
             query: l.geocodeQuery || '',
-            expected: expected
+            expected: 'Reported via map'
         });
         const r = await fetch('https://douglashalse.com/api/report.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: body
         });
-        if (r.ok) {
-            input.value = '';
-            form.style.display = 'none';
-            btn.textContent = '✓ ' + (getLang() === 'sv' ? 'Skickat' : 'Sent');
-        } else {
-            btn.textContent = getLang() === 'sv' ? 'Fel! Försök igen' : 'Error! Retry';
-        }
+        if (btn) btn.textContent = r.ok ? '✓ ' + t('Sent') : '✗';
     } catch(e) {
-        btn.textContent = getLang() === 'sv' ? 'Fel! Försök igen' : 'Error! Retry';
+        if (btn) btn.textContent = '✗';
     }
-    setTimeout(() => { btn.textContent = t('Report'); btn.disabled = false; }, 2000);
+    setTimeout(() => { if (btn) btn.textContent = '📍 ' + t('Report wrong location'); }, 2000);
 }
