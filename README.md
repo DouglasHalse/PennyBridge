@@ -53,3 +53,5 @@ python -m http.server 8080 --bind 0.0.0.0
 ## Tech
 
 Leaflet, MarkerCluster, static GitHub Pages, Python data pipeline, daily cron via GitHub Actions, Google Geocoding API. Location reports via custom PHP endpoint on douglashalse.com.
+
+This project was almost entirely vibe-coded with Hermes Agent.
