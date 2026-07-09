@@ -64,68 +64,6 @@ html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMa
 .lang-toggle:hover { background: rgba(255,255,255,0.25); }
 
 /* --- Category Tabs --- */
-.category-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-}
-.category-group {
-    flex: 1;
-    min-width: 0;
-    padding: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.category-group + .category-group { border-left: 1px solid var(--border); }
-.category-group-label {
-    font-size: 0.65rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--text-secondary); text-align: center; padding: 0 2px;
-}
-.category-group-tabs {
-    display: flex; flex-wrap: wrap; gap: 2px; justify-content: center;
-}
-.category-tab {
-    flex: 0 0 auto;
-    padding: 4px 7px; min-height: 30px;
-    border: 1px solid var(--border); border-radius: 5px;
-    background: white; color: var(--text-secondary);
-    font-size: 0.65rem; font-weight: 600; cursor: pointer;
-    transition: all 0.15s; white-space: nowrap;
-    display: flex; align-items: center; gap: 2px;
-}
-.category-tab:hover { background: #f0f0f5; color: var(--accent); border-color: var(--accent); }
-.category-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-.tab-count {
-    font-size: 0.6rem; opacity: 0.7; font-weight: 400;
-}
-.category-tab.active .tab-count { opacity: 1; }
-
-/* Landlord color dots on tabs */
-.tab-dot {
-    display: inline-block; width: 7px; height: 7px;
-    border-radius: 50%; margin-right: 2px; flex-shrink: 0;
-}
-
-/* Scroll fade indicators (mobile) */
-.category-tabs-fade {
-    display: none;
-    position: sticky; z-index: 1;
-    width: 32px; flex-shrink: 0;
-    pointer-events: none;
-    transition: opacity 0.2s; opacity: 0;
-}
-.category-tabs-fade-left {
-    left: -8px;
-    background: linear-gradient(to right, var(--sidebar-bg) 20%, transparent);
-}
-.category-tabs-fade-right {
-    right: -8px;
-    background: linear-gradient(to left, var(--sidebar-bg) 20%, transparent);
-}
-.category-tabs-fade.visible { opacity: 1; }
-
 /* --- Filters --- */
 #filters {
     padding: 10px 16px 6px;
@@ -406,16 +344,6 @@ input[type="range"] { padding: 0; border: none; cursor: pointer; accent-color: v
     #filterToggle { display: flex; }
     #coffeeButton { display: flex; bottom: 132px; }
     #githubButton { display: flex; bottom: 84px; }
-
-    .category-tabs {
-        display: flex; overflow-x: auto; flex-wrap: nowrap;
-        padding: 4px 8px; gap: 3px;
-    }
-    .category-group { display: contents; }
-    .category-group-label { display: none; }
-    .category-group-tabs { display: contents; }
-    .category-tab { flex-shrink: 0; }
-    .category-tabs-fade { display: block; }
 
     #filters { max-height: 40%; }
 

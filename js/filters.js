@@ -85,16 +85,22 @@ function buildFilterUI(listings) {
             <label>${t('Landlord')}</label>
             <div class="multi-select" id="landlordMultiSelect">
                 <div class="multi-select-trigger" id="landlordSelectTrigger">
-                    <span class="multi-select-label">${t('All landlords')}</span>
+                    <span class="multi-select-label">${
+                        filterState.landlords.length === 0 ? t('All landlords') :
+                        filterState.landlords.length === 1 ? getLandlordMeta(filterState.landlords[0]).name :
+                        filterState.landlords.length + ' ' + (getLang() === 'sv' ? 'värdar' : 'landlords')
+                    }</span>
                     <span class="multi-select-arrow">▼</span>
                 </div>
                 <div class="multi-select-dropdown" id="landlordSelectDropdown">
                     ${sources.map(src => {
                         const meta = getLandlordMeta(src);
+                        const count = listings.filter(l => l.source === src).length;
                         return `<label class="multi-select-option">
                             <input type="checkbox" value="${src}"${filterState.landlords.includes(src) ? ' checked' : ''}>
-                            <span class="tab-dot" style="background:${meta.color}"></span>
+                            <span style="display:inline-block;width:0.82em;height:0.82em;border-radius:50%;background:${meta.color}"></span>
                             ${meta.name}
+                            <span style="margin-left:auto;font-size:0.65rem;opacity:0.5">${count}</span>
                         </label>`;
                     }).join('')}
                 </div>
@@ -196,7 +202,7 @@ function setupMultiSelect(containerId, triggerId, dropdownId, getter, setter) {
                 return parent.textContent.trim();
             }).join(', ');
         } else {
-            label.textContent = checked.length + ' ' + t('listings').toLowerCase();
+            label.textContent = checked.length + ' ' + (getLang() === 'sv' ? 'värdar' : 'landlords');
         }
     }
 
