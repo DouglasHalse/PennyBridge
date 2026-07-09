@@ -343,7 +343,7 @@ input[type="range"] { padding: 0; border: none; cursor: pointer; accent-color: v
 
 #coffeeButton {
     display: flex; position: fixed;
-    bottom: 24px; right: 28px; z-index: 2000;
+    bottom: 72px; right: 28px; z-index: 2000;
     width: 40px; height: 40px;
     border-radius: 50%; border: none;
     background: #FFDD00; color: #000;
@@ -354,6 +354,20 @@ input[type="range"] { padding: 0; border: none; cursor: pointer; accent-color: v
     text-decoration: none;
 }
 #coffeeButton:hover { transform: scale(1.1); }
+
+#githubButton {
+    display: flex; position: fixed;
+    bottom: 24px; right: 28px; z-index: 2000;
+    width: 40px; height: 40px;
+    border-radius: 50%; border: none;
+    background: #333; color: #fff;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    align-items: center; justify-content: center;
+    transition: transform 0.2s;
+    text-decoration: none;
+}
+#githubButton:hover { transform: scale(1.1); }
 
 /* --- Loading --- */
 #loading {
@@ -390,7 +404,8 @@ input[type="range"] { padding: 0; border: none; cursor: pointer; accent-color: v
     #sidebar.open + .sidebar-backdrop { display: block; }
 
     #filterToggle { display: flex; }
-    #coffeeButton { display: flex; bottom: 84px; }
+    #coffeeButton { display: flex; bottom: 132px; }
+    #githubButton { display: flex; bottom: 84px; }
 
     .category-tabs {
         display: flex; overflow-x: auto; flex-wrap: nowrap;

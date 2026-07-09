@@ -92,7 +92,7 @@ function buildFilterUI(listings) {
                     ${sources.map(src => {
                         const meta = getLandlordMeta(src);
                         return `<label class="multi-select-option">
-                            <input type="checkbox" value="${src}">
+                            <input type="checkbox" value="${src}"${filterState.landlords.includes(src) ? ' checked' : ''}>
                             <span class="tab-dot" style="background:${meta.color}"></span>
                             ${meta.name}
                         </label>`;
@@ -118,7 +118,7 @@ function buildFilterUI(listings) {
             <label>${t('Tags')}</label>
             <div class="tag-filters">
                 ${[...allTags].sort().map(tg =>
-                    `<span class="tag-pill" data-tag="${tg}" onclick="toggleTag('${tg}')">${getTagLabel(tg)}</span>`
+                    `<span class="tag-pill${filterState.tags.includes(tg) ? ' active' : ''}" data-tag="${tg}" onclick="toggleTag('${tg}')">${getTagLabel(tg)}</span>`
                 ).join('')}
             </div>
         </div>
@@ -126,7 +126,7 @@ function buildFilterUI(listings) {
 
         <div class="filter-group">
             <label class="checkbox-row">
-                <input type="checkbox" id="availableNow">
+                <input type="checkbox" id="availableNow"${filterState.availableNow ? ' checked' : ''}>
                 ${t('Available now')}
             </label>
         </div>
