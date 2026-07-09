@@ -1,43 +1,55 @@
 # PennyBridge
 
-Rental map for Örebro -- see available apartments from 8 landlords on one map.
+Rental map for Örebro -- see available apartments from 9 landlords on one map.
 
 **Live at:** [douglashalse.github.io/PennyBridge](https://douglashalse.github.io/PennyBridge)
 
 ## Landlords
 
-| Landlord | Listings | Source |
-|----------|----------|--------|
-| Örebrobostäder | 146 | Momentum API |
-| Husherren | 51 | HTML scraping |
-| Behrn Fastigheter | 28 | HTML scraping |
-| Ragnfast | 25 | Momentum API |
-| PG Jönsson | 22 | WP REST API |
-| Söderberg | 11 | Momentum API |
-| Heimstaden | 3 | HTML scraping |
-| Egeryds | 1 | WP REST API |
+| Landlord | Source | Method |
+|----------|--------|--------|
+| Örebrobostäder (ÖBO) | obo.se | Momentum API |
+| Ragnfast | ragnfast.se | Momentum API |
+| Söderberg | soderberg.se | Momentum API |
+| PG Jönsson | pgj.se | WordPress REST API |
+| Husherren | husherren.realportal.nu | HTML scraping |
+| Behrn | behrn.se | HTML scraping + detail pages |
+| Egeryds | egerydsfastigheter.se | WordPress REST API |
+| Heimstaden | heimstaden.com | HTML scraping |
+| HomeQ | homeq.se | Public REST API (19 landlords) |
 
 ## How it works
 
-A Python pipeline fetches listings from each landlord daily via GitHub Actions, normalizes them into a common schema, geocodes addresses, and outputs a single JSON file. The frontend is a static HTML page with Leaflet maps.
+A Python pipeline fetches listings from each landlord daily via GitHub Actions, normalizes them into a common schema, geocodes addresses with Google Maps, and outputs a single JSON file. The frontend is a static HTML page with Leaflet maps.
 
-- **Momentum landlords** (ÖBO, Ragnfast, Söderberg) share the same platform and API key
-- **WordPress landlords** (PG Jönsson, Behrn, Egeryds) are scraped from their public listing pages
-- **PHP landlords** (Husherren) use HTML parsing
-- **Heimstaden** uses WordPress with structured listing cards
+- **Momentum landlords** -- ÖBO, Ragnfast, Söderberg share the same platform and API key
+- **WordPress landlords** -- PG Jönsson, Egeryds scraped from public listing pages
+- **HTML scraping** -- Husherren, Behrn, Heimstaden parsed from server-rendered HTML
+- **HomeQ API** -- 19 landlords aggregated via public card search endpoint
+
+## Features
+
+- Per-landlord color-coded markers with clustering
+- Landlord tabs, room count slider, max price slider
+- Tag pills: student, senior, youth, quick-pick
+- Language toggle: SV / EN
+- One-click location report (sends to GitHub Issues)
+- Location editor at `/editor.html` for manual coordinate fixes
 
 ## Local development
 
 ```bash
+pip install requests geopy
+
 # Fetch data
 python scripts/fetch_listings.py
 python scripts/fetch_extra.py
 
 # Serve locally
 python -m http.server 8080 --bind 0.0.0.0
-# Open http://localhost:8080
+# Open http://127.0.0.1:8080
 ```
 
 ## Tech
 
-Leaflet, MarkerCluster, static GitHub Pages site, Python data pipeline, daily cron via GitHub Actions. This project is almost entirely AI-generated.
+Leaflet, MarkerCluster, static GitHub Pages, Python data pipeline, daily cron via GitHub Actions, Google Geocoding API. Location reports via custom PHP endpoint on douglashalse.com.
