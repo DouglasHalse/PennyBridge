@@ -126,6 +126,11 @@ function buildCategoryTabs(landlordCounts) {
     html += '</div></div>';
     container.innerHTML = html;
 
+    // Sync tab active states with URL params
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.toggle('active', filterState.landlords.includes(tab.dataset.landlord));
+    });
+
     // Fade indicators for mobile
     container.insertAdjacentHTML('afterbegin',
         '<div class="category-tabs-fade category-tabs-fade-left" id="fadeLeft"></div>');
@@ -152,7 +157,7 @@ function filterByLandlord(source) {
     if (idx >= 0) {
         filterState.landlords.splice(idx, 1);
     } else {
-        filterState.landlords = [source]; // Select only this landlord
+        filterState.landlords.push(source);
     }
 
     // Update tab active state

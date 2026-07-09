@@ -4,15 +4,46 @@ let filterState = {
     landlords: [],
     tags: [],
     minRooms: 1,
-    priceMax: 5000,
+    priceMax: 0,      // 0 = "not set yet, use data max"
     availableNow: false,
 };
 
 let allListings = [];
+
 let onFilterChange = null;
 let priceDebounce = null;
 let roomsDebounce = null;
 let dataGenerated = null;
+
+function readParamsFromURL() {
+    const p = new URLSearchParams(window.location.search);
+    const landlords = p.get('landlords');
+    const tags = p.get('tags');
+    const minRooms = parseInt(p.get('minRooms'));
+    const priceMax = parseInt(p.get('priceMax'));
+    const availableNow = p.get('availableNow');
+
+    if (landlords) filterState.landlords = landlords.split(',').filter(l => LANDLORD_META[l]);
+    if (tags) filterState.tags = tags.split(',');
+    if (minRooms && minRooms >= 1) filterState.minRooms = minRooms;
+    if (priceMax && priceMax > 0) { filterState.priceMax = priceMax; filterState._priceFromURL = true; }
+    if (availableNow === '1') filterState.availableNow = true;
+}
+
+function updateURLParams() {
+    const p = new URLSearchParams();
+    if (filterState.landlords.length > 0) p.set('landlords', filterState.landlords.join(','));
+    if (filterState.tags.length > 0) p.set('tags', filterState.tags.join(','));
+    if (filterState.minRooms > 1) p.set('minRooms', filterState.minRooms);
+    if (filterState._priceFromURL && filterState.priceMax > 0) p.set('priceMax', filterState.priceMax);
+    if (filterState.availableNow) p.set('availableNow', '1');
+    const qs = p.toString();
+    const newURL = window.location.pathname + (qs ? '?' + qs : '');
+    window.history.replaceState(null, '', newURL);
+}
+
+// Read params on load
+readParamsFromURL();
 
 function initFilters(listings, callback, generated) {
     allListings = listings;
@@ -46,10 +77,8 @@ function buildFilterUI(listings) {
     const allTags = new Set();
     listings.forEach(s => { if (s.tags) s.tags.forEach(t => allTags.add(t)); });
 
-    filterState.priceMax = priceMax;
-    filterState.minRooms = 1;
-    filterState.landlords = [];
-    filterState.tags = [];
+    filterState.priceMax = filterState._priceFromURL ? filterState.priceMax : priceMax;
+    filterState.minRooms = filterState.minRooms > 1 ? filterState.minRooms : 1;
 
     container.innerHTML = `
         <div class="filter-group">
@@ -74,13 +103,13 @@ function buildFilterUI(listings) {
 
         <div class="filter-row">
             <div class="filter-group filter-half">
-                <label>${t('Rooms')}: <strong id="roomsDisplay">${t('All')}</strong></label>
-                <input type="range" id="roomsSlider" min="1" max="${maxRooms}" value="1" step="1">
+                <label>${t('Rooms')}: <strong id="roomsDisplay">${filterState.minRooms > 1 ? filterState.minRooms + ' rum+' : t('All')}</strong></label>
+                <input type="range" id="roomsSlider" min="1" max="${maxRooms}" value="${filterState.minRooms}" step="1">
             </div>
 
             <div class="filter-group filter-half">
-                <label>${t('Max price')}: <strong id="priceDisplay">${priceMax} ${t('kr/month')}</strong></label>
-                <input type="range" id="priceMaxSlider" min="0" max="${priceMax}" value="${priceMax}" step="100">
+                <label>${t('Max price')}: <strong id="priceDisplay">${filterState.priceMax} ${t('kr/month')}</strong></label>
+                <input type="range" id="priceMaxSlider" min="0" max="${priceMax}" value="${filterState.priceMax}" step="100">
             </div>
         </div>
 
@@ -126,6 +155,7 @@ function buildFilterUI(listings) {
         clearTimeout(priceDebounce);
         priceDebounce = setTimeout(() => {
             filterState.priceMax = val;
+            filterState._priceFromURL = true;  // mark as user-set
             applyFilters();
         }, 80);
     });
@@ -218,6 +248,7 @@ function applyFilters() {
     updateResultsList(filtered);
 
     if (onFilterChange) onFilterChange(filtered);
+    updateURLParams();
 }
 
 function updateStats(showing) {
