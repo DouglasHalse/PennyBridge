@@ -98,9 +98,9 @@ function buildFilterUI(listings) {
                         const count = listings.filter(l => l.source === src).length;
                         return `<label class="multi-select-option">
                             <input type="checkbox" value="${src}"${filterState.landlords.includes(src) ? ' checked' : ''}>
-                            <span style="display:inline-block;width:0.82em;height:0.82em;border-radius:50%;background:${meta.color}"></span>
+                            <span class="landlord-dot" style="background:${meta.color}"></span>
                             ${meta.name}
-                            <span style="margin-left:auto;font-size:0.65rem;opacity:0.5">${count}</span>
+                            <span class="landlord-count">${count}</span>
                         </label>`;
                     }).join('')}
                 </div>
