@@ -160,6 +160,7 @@
                     iconSize: [size,size], iconAnchor: [size/2,size/2]
                 });
                 const marker = L.marker([first.lat, first.lon], { icon, draggable: true });
+                marker._originalIcon = icon;
                 marker.listing = first;
                 marker.listingGroup = listings;
                 marker.addrKey = key;
@@ -173,8 +174,8 @@
         }
 
         function selectMarker(marker) {
-            if (selectedMarker) {
-                selectedMarker.setIcon(selectedMarker._icon);
+            if (selectedMarker && selectedMarker !== marker) {
+                selectedMarker.setIcon(selectedMarker._originalIcon);
             }
             selectedMarker = marker;
             const l = marker.listing;
