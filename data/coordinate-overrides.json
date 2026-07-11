@@ -1,7 +1,7 @@
 {
   "Västra Nobelgatan 20, Örebro, Sweden": [
-    59.2792,
-    15.1974
+    59.2806706149657,
+    15.20586133003235
   ],
   "Brygghusgatan 12, Örebro, Sweden": [
     59.25741241632697,
@@ -126,5 +126,89 @@
   "Lillbackavägen 10, Örebro, Sweden": [
     59.253257740086354,
     15.195953249931337
+  ],
+  "Visgatan 30, Örebro, Sweden": [
+    59.29681550066315,
+    15.180455446243288
+  ],
+  "Peppargatan 29B, Örebro, Sweden": [
+    59.25349085414502,
+    15.216740369796755
+  ],
+  "Ulrikelundsvägen 8, Örebro, Sweden": [
+    59.23520712983076,
+    15.157165825366974
+  ],
+  "Karlsdalsallén 16A, Örebro, Sweden": [
+    59.25206197702674,
+    15.20425468683243
+  ],
+  "Sörbyvägen 4, Örebro, Sweden": [
+    59.250796232579994,
+    15.229867100715639
+  ],
+  "Tamarindvägen 4 B, Örebro, Sweden": [
+    59.25188233468566,
+    15.223043560981752
+  ],
+  "Tamarindvägen 2, Örebro, Sweden": [
+    59.252086660633196,
+    15.223588049411775
+  ],
+  "Karlsdalsallén 48A, Örebro, Sweden": [
+    59.25262146771724,
+    15.217781066894533
+  ],
+  "Karlsdalsallén 44A, Örebro, Sweden": [
+    59.252672205389395,
+    15.216903984546663
+  ],
+  "Peppargatan 33A, Örebro, Sweden": [
+    59.253028738252766,
+    15.216592848300936
+  ],
+  "Karldalsallén 41, Örebro, Sweden": [
+    59.2522896140531,
+    15.215699672698976
+  ],
+  "Karldalsallén 39, Örebro, Sweden": [
+    59.25233349571473,
+    15.215198099613191
+  ],
+  "Karlsdalsallén 41, Örebro, Sweden": [
+    59.2522896140531,
+    15.215699672698976
+  ],
+  "Karlsdalsallén 39, Örebro, Sweden": [
+    59.25233349571473,
+    15.215195417404177
+  ],
+  "Karlsdalsallén 43 A, Örebro, Sweden": [
+    59.25225807407392,
+    15.216413140296938
+  ],
+  "Hjortstorpsvägen 28, Örebro, Sweden": [
+    59.28372456640078,
+    15.230982899665834
+  ],
+  "Längbrotorg 5, 70366 Örebro, Sweden": [
+    59.28257234503603,
+    15.224164724349977
+  ],
+  "Längbrotorg 3, 70366 Örebro, Sweden": [
+    59.28228188593342,
+    15.224162042140962
+  ],
+  "Längbrotorg 1, 70366 Örebro, Sweden": [
+    59.28204896882493,
+    15.224145948886873
+  ],
+  "Längbrotorg 6, Örebro, Sweden": [
+    59.28385471975153,
+    15.226498246192934
+  ],
+  "Tegnérgatan 23, Örebro, Sweden": [
+    59.281346097537494,
+    15.20575672388077
   ]
 }
