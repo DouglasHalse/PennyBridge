@@ -1,0 +1,1102 @@
+{
+  "Varbergagatan 97, Orebro, Sweden": {
+    "lat": 59.28699830000001,
+    "lon": 15.1788593,
+    "precise": true
+  },
+  "Höglundagatan 50, Orebro, Sweden": {
+    "lat": 59.28799289999999,
+    "lon": 15.2326052,
+    "precise": true
+  },
+  "Höglundagatan 52, Orebro, Sweden": {
+    "lat": 59.28812389999999,
+    "lon": 15.2325591,
+    "precise": true
+  },
+  "Höglundagatan 44, Orebro, Sweden": {
+    "lat": 59.287719,
+    "lon": 15.2321494,
+    "precise": true
+  },
+  "Höglundagatan 40, Orebro, Sweden": {
+    "lat": 59.2874545,
+    "lon": 15.2322395,
+    "precise": true
+  },
+  "Höglundagatan 54, Orebro, Sweden": {
+    "lat": 59.2882549,
+    "lon": 15.232513,
+    "precise": true
+  },
+  "Krönikegatan 9 C, Orebro, Sweden": {
+    "lat": 59.3003908,
+    "lon": 15.1804828,
+    "precise": true
+  },
+  "Varbergagatan 189, Orebro, Sweden": {
+    "lat": 59.2893198,
+    "lon": 15.1723869,
+    "precise": true
+  },
+  "Visgatan 17, Orebro, Sweden": {
+    "lat": 59.2966181,
+    "lon": 15.1853984,
+    "precise": true
+  },
+  "Varbergagatan 210, Orebro, Sweden": {
+    "lat": 59.2901639,
+    "lon": 15.1693188,
+    "precise": true
+  },
+  "Ekängsgatan 15, Orebro, Sweden": {
+    "lat": 59.26475780000001,
+    "lon": 15.2059541,
+    "precise": true
+  },
+  "Västra Vintergatan 21, Orebro, Sweden": {
+    "lat": 59.27027510000001,
+    "lon": 15.1854439,
+    "precise": true
+  },
+  "Kabingatan 5, Orebro, Sweden": {
+    "lat": 59.2541519,
+    "lon": 15.2067661,
+    "precise": true
+  },
+  "Peppargatan 8, Orebro, Sweden": {
+    "lat": 59.255287,
+    "lon": 15.2169181,
+    "precise": true
+  },
+  "Västra Vintergatan 144, Orebro, Sweden": {
+    "lat": 59.2721484,
+    "lon": 15.1858233,
+    "precise": true
+  },
+  "Östra Vintergatan 90, Orebro, Sweden": {
+    "lat": 59.27152109999999,
+    "lon": 15.187905,
+    "precise": true
+  },
+  "Höglundagatan 48, Orebro, Sweden": {
+    "lat": 59.2878619,
+    "lon": 15.2326513,
+    "precise": true
+  },
+  "Polhemsgatan 18  A, Orebro, Sweden": {
+    "lat": 59.2830853,
+    "lon": 15.2190269,
+    "precise": true
+  },
+  "Granrisvägen 30  B, Orebro, Sweden": {
+    "lat": 59.23762679999999,
+    "lon": 15.2430992,
+    "precise": true
+  },
+  "Tengvallsgatan 42, Orebro, Sweden": {
+    "lat": 59.27638580000001,
+    "lon": 15.1859524,
+    "precise": true
+  },
+  "Änggatan 18 A, Orebro, Sweden": {
+    "lat": 59.26768999999999,
+    "lon": 15.2068941,
+    "precise": true
+  },
+  "Varbergagatan 29, Orebro, Sweden": {
+    "lat": 59.28464229999999,
+    "lon": 15.1785806,
+    "precise": true
+  },
+  "Storgatan 52  B, Orebro, Sweden": {
+    "lat": 59.28246719999999,
+    "lon": 15.2205804,
+    "precise": true
+  },
+  "Västra Nobelgatan 27  B, Orebro, Sweden": {
+    "lat": 59.28046810000001,
+    "lon": 15.2026193,
+    "precise": true
+  },
+  "Norra Grev Rosengatan 17  F 17 F, Orebro, Sweden": {
+    "lat": 59.2779495,
+    "lon": 15.2220805,
+    "precise": true
+  },
+  "Restalundsvägen 45, Orebro, Sweden": {
+    "lat": 59.2647298,
+    "lon": 15.2226592,
+    "precise": true
+  },
+  "Landbotorpsallén 5  G, Orebro, Sweden": {
+    "lat": 59.2566602,
+    "lon": 15.1981774,
+    "precise": true
+  },
+  "Längbrogatan 2  A, Orebro, Sweden": {
+    "lat": 59.2833722,
+    "lon": 15.226176,
+    "precise": true
+  },
+  "Tengvallsgatan 26, Orebro, Sweden": {
+    "lat": 59.27691679999999,
+    "lon": 15.1888496,
+    "precise": true
+  },
+  "Varberga Torg 5, Orebro, Sweden": {
+    "lat": 59.28761470000001,
+    "lon": 15.1788954,
+    "precise": true
+  },
+  "Västra Nobelgatan 23, Orebro, Sweden": {
+    "lat": 59.2804252,
+    "lon": 15.2039617,
+    "precise": true
+  },
+  "Hjalmar Bergmans Väg 52, Orebro, Sweden": {
+    "lat": 59.28942430000001,
+    "lon": 15.1995152,
+    "precise": true
+  },
+  "Lyrikgatan 4  B, Orebro, Sweden": {
+    "lat": 59.29793679999999,
+    "lon": 15.1805563,
+    "precise": true
+  },
+  "Västra Nobelgatan 17  C, Orebro, Sweden": {
+    "lat": 59.2804377,
+    "lon": 15.205728,
+    "precise": true
+  },
+  "Varbergagatan 9, Orebro, Sweden": {
+    "lat": 59.2830873,
+    "lon": 15.1800292,
+    "precise": true
+  },
+  "Varbergagatan 88, Orebro, Sweden": {
+    "lat": 59.2875871,
+    "lon": 15.1776303,
+    "precise": true
+  },
+  "Krönikegatan 19 A, Orebro, Sweden": {
+    "lat": 59.3001291,
+    "lon": 15.1829815,
+    "precise": true
+  },
+  "Ekängsgatan 11, Orebro, Sweden": {
+    "lat": 59.2644982,
+    "lon": 15.2055864,
+    "precise": true
+  },
+  "Fabriksgatan 44, Orebro, Sweden": {
+    "lat": 59.26802559999999,
+    "lon": 15.2028972,
+    "precise": true
+  },
+  "Rickardsbergsgatan 6, Orebro, Sweden": {
+    "lat": 59.2881703,
+    "lon": 15.2291593,
+    "precise": true
+  },
+  "Berggatan 42, Orebro, Sweden": {
+    "lat": 59.28015610000001,
+    "lon": 15.2227313,
+    "precise": true
+  },
+  "Norrbygatan 32, Orebro, Sweden": {
+    "lat": 59.28594349999999,
+    "lon": 15.2340486,
+    "precise": true
+  },
+  "Granrisvägen 46  E, Orebro, Sweden": {
+    "lat": 59.2377963,
+    "lon": 15.2464093,
+    "precise": true
+  },
+  "Tallrisvägen 37  B, Orebro, Sweden": {
+    "lat": 59.23596730000001,
+    "lon": 15.2447034,
+    "precise": true
+  },
+  "Varbergagatan 184, Orebro, Sweden": {
+    "lat": 59.2898172,
+    "lon": 15.1721337,
+    "precise": true
+  },
+  "Berggatan 44, Orebro, Sweden": {
+    "lat": 59.280375,
+    "lon": 15.222979,
+    "precise": true
+  },
+  "Rönnvägen 30, Orebro, Sweden": {
+    "lat": 59.264219,
+    "lon": 15.2418269,
+    "precise": false
+  },
+  "Tengvallsgatan 24, Orebro, Sweden": {
+    "lat": 59.2767495,
+    "lon": 15.1887953,
+    "precise": true
+  },
+  "Honolulugatan 6, Orebro, Sweden": {
+    "lat": 59.278394,
+    "lon": 15.2234575,
+    "precise": true
+  },
+  "Författargatan 23  C, Orebro, Sweden": {
+    "lat": 59.29616139999999,
+    "lon": 15.1893993,
+    "precise": true
+  },
+  "Tengvallsgatan 28, Orebro, Sweden": {
+    "lat": 59.277084,
+    "lon": 15.1889061,
+    "precise": true
+  },
+  "Varbergagatan 188, Orebro, Sweden": {
+    "lat": 59.28943630000001,
+    "lon": 15.1723337,
+    "precise": true
+  },
+  "Torgvägen 4 B, Orebro, Sweden": {
+    "lat": 59.28094230000001,
+    "lon": 15.2368679,
+    "precise": true
+  },
+  "Lyrikgatan 12  B, Orebro, Sweden": {
+    "lat": 59.2978688,
+    "lon": 15.182767,
+    "precise": true
+  },
+  "Engelbrektsgatan 52, Orebro, Sweden": {
+    "lat": 59.2702002,
+    "lon": 15.2240706,
+    "precise": true
+  },
+  "Vivallaringen 2  S, Orebro, Sweden": {
+    "lat": 59.29473520000001,
+    "lon": 15.1949967,
+    "precise": true
+  },
+  "Varbergagatan 177, Orebro, Sweden": {
+    "lat": 59.2893164,
+    "lon": 15.1712582,
+    "precise": true
+  },
+  "Varbergagatan 135, Orebro, Sweden": {
+    "lat": 59.2879143,
+    "lon": 15.1743297,
+    "precise": true
+  },
+  "Varbergagatan 130, Orebro, Sweden": {
+    "lat": 59.28786969999999,
+    "lon": 15.1762557,
+    "precise": true
+  },
+  "Tengvallsgatan 18, Orebro, Sweden": {
+    "lat": 59.2762149,
+    "lon": 15.1884687,
+    "precise": true
+  },
+  "Norrbygatan 31, Orebro, Sweden": {
+    "lat": 59.2869093,
+    "lon": 15.2324009,
+    "precise": true
+  },
+  "Västra Vintergatan 19, Orebro, Sweden": {
+    "lat": 59.270176,
+    "lon": 15.1857782,
+    "precise": true
+  },
+  "Strofgatan 11  B, Orebro, Sweden": {
+    "lat": 59.30302669999999,
+    "lon": 15.1838174,
+    "precise": true
+  },
+  "Versgatan 28  A, Orebro, Sweden": {
+    "lat": 59.30348559999999,
+    "lon": 15.192435,
+    "precise": true
+  },
+  "Örnsköldsgatan 149, Orebro, Sweden": {
+    "lat": 59.2822358,
+    "lon": 15.1835027,
+    "precise": true
+  },
+  "Författargatan 8  C, Orebro, Sweden": {
+    "lat": 59.29648100000001,
+    "lon": 15.1936814,
+    "precise": true
+  },
+  "Lertagsgatan 56, Orebro, Sweden": {
+    "lat": 59.2783342,
+    "lon": 15.1879785,
+    "precise": true
+  },
+  "Höglundagatan 36, Orebro, Sweden": {
+    "lat": 59.2872011,
+    "lon": 15.2318858,
+    "precise": true
+  },
+  "Lertagsgatan 58, Orebro, Sweden": {
+    "lat": 59.2779579,
+    "lon": 15.1876997,
+    "precise": true
+  },
+  "Krönikegatan 7  B, Orebro, Sweden": {
+    "lat": 59.30027219999999,
+    "lon": 15.179706,
+    "precise": true
+  },
+  "Västra Vintergatan 204, Orebro, Sweden": {
+    "lat": 59.27130689999999,
+    "lon": 15.1825824,
+    "precise": true
+  },
+  "Krönikegatan 24  B, Orebro, Sweden": {
+    "lat": 59.2992725,
+    "lon": 15.1842952,
+    "precise": true
+  },
+  "Tengvallsgatan 48, Orebro, Sweden": {
+    "lat": 59.27677540000001,
+    "lon": 15.1863406,
+    "precise": true
+  },
+  "Krönikegatan 4  B, Orebro, Sweden": {
+    "lat": 59.2995956,
+    "lon": 15.179538,
+    "precise": true
+  },
+  "Krönikegatan 9 B, Orebro, Sweden": {
+    "lat": 59.300256,
+    "lon": 15.1804722,
+    "precise": true
+  },
+  "Krönikegatan 3 C, Orebro, Sweden": {
+    "lat": 59.3004051,
+    "lon": 15.1788119,
+    "precise": true
+  },
+  "Strofgatan 17  B, Orebro, Sweden": {
+    "lat": 59.3029297,
+    "lon": 15.1821335,
+    "precise": true
+  },
+  "Hindergårdsgatan 12 C, Orebro, Sweden": {
+    "lat": 59.28547580000001,
+    "lon": 15.2436095,
+    "precise": true
+  },
+  "Norrbygatan 23, Orebro, Sweden": {
+    "lat": 59.28627479999999,
+    "lon": 15.2329948,
+    "precise": true
+  },
+  "Tunnelgatan 1 A, Orebro, Sweden": {
+    "lat": 59.28480379999999,
+    "lon": 15.2187021,
+    "precise": true
+  },
+  "Honolulugatan 10, Orebro, Sweden": {
+    "lat": 59.2788305,
+    "lon": 15.2230962,
+    "precise": true
+  },
+  "Hovstavägen 19, Orebro, Sweden": {
+    "lat": 59.2855821,
+    "lon": 15.2200048,
+    "precise": true
+  },
+  "Krönikegatan 19 C, Orebro, Sweden": {
+    "lat": 59.3004304,
+    "lon": 15.1829974,
+    "precise": true
+  },
+  "Västra Vintergatan 45, Orebro, Sweden": {
+    "lat": 59.269951,
+    "lon": 15.1831835,
+    "precise": true
+  },
+  "Tunnelgatan 1 B, Orebro, Sweden": {
+    "lat": 59.2850359,
+    "lon": 15.218704,
+    "precise": true
+  },
+  "Varbergagatan 137, Orebro, Sweden": {
+    "lat": 59.287841,
+    "lon": 15.1748461,
+    "precise": true
+  },
+  "Lertagsgatan 45, Orebro, Sweden": {
+    "lat": 59.2805188,
+    "lon": 15.1919666,
+    "precise": true
+  },
+  "Varbergagatan 136, Orebro, Sweden": {
+    "lat": 59.28788650000001,
+    "lon": 15.1746277,
+    "precise": true
+  },
+  "Varbergagatan 115, Orebro, Sweden": {
+    "lat": 59.2867926,
+    "lon": 15.1755795,
+    "precise": true
+  },
+  "Varbergagatan 64, Orebro, Sweden": {
+    "lat": 59.2862136,
+    "lon": 15.1787215,
+    "precise": true
+  },
+  "Varbergagatan 37, Orebro, Sweden": {
+    "lat": 59.28508609999999,
+    "lon": 15.1780603,
+    "precise": true
+  },
+  "Höglundagatan 21  A, Orebro, Sweden": {
+    "lat": 59.28664129999999,
+    "lon": 15.2311104,
+    "precise": true
+  },
+  "Skäpplandsgatan 23, Orebro, Sweden": {
+    "lat": 59.2747539,
+    "lon": 15.1676529,
+    "precise": true
+  },
+  "Studievägen 12, Orebro, Sweden": {
+    "lat": 59.2573357,
+    "lon": 15.2242685,
+    "precise": true
+  },
+  "Tornfalkgatan 21, Orebro, Sweden": {
+    "lat": 59.278291,
+    "lon": 15.1736111,
+    "precise": true
+  },
+  "Studentgatan 26, Orebro, Sweden": {
+    "lat": 59.25237929999999,
+    "lon": 15.2461984,
+    "precise": true
+  },
+  "Rudbecksgatan 40, Orebro, Sweden": {
+    "lat": 59.2678972,
+    "lon": 15.2164911,
+    "precise": true
+  },
+  "Studentgatan 18, Orebro, Sweden": {
+    "lat": 59.25249040000001,
+    "lon": 15.2455801,
+    "precise": true
+  },
+  "Granrisvägen 27  B, Orebro, Sweden": {
+    "lat": 59.2388393,
+    "lon": 15.2445902,
+    "precise": true
+  },
+  "Studentgatan 20    0313, Orebro, Sweden": {
+    "lat": 59.25224600000001,
+    "lon": 15.2451093,
+    "precise": true
+  },
+  "Åstadalsvägen 3  A    0414, Orebro, Sweden": {
+    "lat": 59.2537579,
+    "lon": 15.2436255,
+    "precise": true
+  },
+  "Rudbecksgatan 38 A  205, Orebro, Sweden": {
+    "lat": 59.2679282,
+    "lon": 15.2155971,
+    "precise": true
+  },
+  "Peppargatan 16, Orebro, Sweden": {
+    "lat": 59.25446189999999,
+    "lon": 15.2164795,
+    "precise": true
+  },
+  "Grankottevägen 8, Orebro, Sweden": {
+    "lat": 59.24520599999999,
+    "lon": 15.2404852,
+    "precise": true
+  },
+  "Kristinagatan 27  A, Orebro, Sweden": {
+    "lat": 59.2677825,
+    "lon": 15.2294001,
+    "precise": true
+  },
+  "Längbrotorg 6, Orebro, Sweden": {
+    "lat": 59.28277680000001,
+    "lon": 15.2244618,
+    "precise": false
+  },
+  "Älvstorpsvägen 14 A, Nora, Sweden": {
+    "lat": 59.51676339999999,
+    "lon": 15.028979,
+    "precise": true
+  },
+  "Skolvägen 3 A, Kumla, Sweden": {
+    "lat": 59.1265391,
+    "lon": 15.1387413,
+    "precise": true
+  },
+  "Höglundagatan 9 D, Orebro, Sweden": {
+    "lat": 59.2847799,
+    "lon": 15.2319462,
+    "precise": true
+  },
+  "Höglundagatan 9 B, Orebro, Sweden": {
+    "lat": 59.28483480000001,
+    "lon": 15.2319091,
+    "precise": true
+  },
+  "Längbrotorg 8 B, Orebro, Sweden": {
+    "lat": 59.2824086,
+    "lon": 15.2265445,
+    "precise": true
+  },
+  "Karlsgatan 4 A, Orebro, Sweden": {
+    "lat": 59.2772378,
+    "lon": 15.2033774,
+    "precise": true
+  },
+  "Köpmangatan 28, Kumla, Sweden": {
+    "lat": 59.12517560000001,
+    "lon": 15.1430955,
+    "precise": true
+  },
+  "Hjortstorpsvägen 31 D, Orebro, Sweden": {
+    "lat": 59.28474349999999,
+    "lon": 15.2316641,
+    "precise": true
+  },
+  "Hjortstorpsvägen 21, Orebro, Sweden": {
+    "lat": 59.28391120000001,
+    "lon": 15.2306375,
+    "precise": true
+  },
+  "Längbrotorg 4, Orebro, Sweden": {
+    "lat": 59.28277680000001,
+    "lon": 15.2244618,
+    "precise": false
+  },
+  "Hjortstorpsvägen 29, Orebro, Sweden": {
+    "lat": 59.2842146,
+    "lon": 15.2315784,
+    "precise": true
+  },
+  "Hjortstorpsvägen 27, Orebro, Sweden": {
+    "lat": 59.2841438,
+    "lon": 15.2313934,
+    "precise": true
+  },
+  "Hertig Karls Allé 16 B, Orebro, Sweden": {
+    "lat": 59.2747368,
+    "lon": 15.2011754,
+    "precise": true
+  },
+  "Rynningegatan 13 B, Orebro, Sweden": {
+    "lat": 59.2819999,
+    "lon": 15.223559,
+    "precise": true
+  },
+  "Slottsgatan 12, Orebro, Sweden": {
+    "lat": 59.27694340000001,
+    "lon": 15.2180399,
+    "precise": true
+  },
+  "Skolvägen 3, Kumla, Sweden": {
+    "lat": 59.12640859999999,
+    "lon": 15.1386944,
+    "precise": true
+  },
+  "Karlsgatan 6, Orebro, Sweden": {
+    "lat": 59.27731559999999,
+    "lon": 15.2028855,
+    "precise": true
+  },
+  "Karlsgatan 12 B, Orebro, Sweden": {
+    "lat": 59.27727840000001,
+    "lon": 15.2014789,
+    "precise": true
+  },
+  "Rynningegatan 13 A, Orebro, Sweden": {
+    "lat": 59.2820051,
+    "lon": 15.2233662,
+    "precise": true
+  },
+  "Tornfalkgatan 129, Orebro, Sweden": {
+    "lat": 59.2814737,
+    "lon": 15.1736345,
+    "precise": true
+  },
+  "Tornfalkgatan 153, Orebro, Sweden": {
+    "lat": 59.2817085,
+    "lon": 15.1760448,
+    "precise": true
+  },
+  "Hagagatan 28 B, Orebro, Sweden": {
+    "lat": 59.2722943,
+    "lon": 15.1994217,
+    "precise": true
+  },
+  "Faktorigatan 11, Orebro, Sweden": {
+    "lat": 59.2745336,
+    "lon": 15.2223413,
+    "precise": true
+  },
+  "Nygatan 35, Orebro, Sweden": {
+    "lat": 59.2701343,
+    "lon": 15.2155662,
+    "precise": true
+  },
+  "Värngatan 12, Orebro, Sweden": {
+    "lat": 59.2860554,
+    "lon": 15.2442038,
+    "precise": true
+  },
+  "Storgatan 47 C, Orebro, Sweden": {
+    "lat": 59.28187819999999,
+    "lon": 15.2188448,
+    "precise": true
+  },
+  "Universitetsgatan 17 A, Orebro, Sweden": {
+    "lat": 59.256291,
+    "lon": 15.2499674,
+    "precise": true
+  },
+  "Olaigatan 3 A, Orebro, Sweden": {
+    "lat": 59.27629109999999,
+    "lon": 15.2113061,
+    "precise": true
+  },
+  "Engelbrektsgatan 27 A, Orebro, Sweden": {
+    "lat": 59.2702311,
+    "lon": 15.2247181,
+    "precise": true
+  },
+  "Fredsgatan 36, Orebro, Sweden": {
+    "lat": 59.2749564,
+    "lon": 15.2223636,
+    "precise": true
+  },
+  "Tornfalkgatan 139, Orebro, Sweden": {
+    "lat": 59.2816927,
+    "lon": 15.1746468,
+    "precise": true
+  },
+  "Storgatan 47 B, Orebro, Sweden": {
+    "lat": 59.2816632,
+    "lon": 15.2194464,
+    "precise": true
+  },
+  "Värngatan 14, Orebro, Sweden": {
+    "lat": 59.28647489999999,
+    "lon": 15.2439,
+    "precise": true
+  },
+  "Rostagatan 3 A, Orebro, Sweden": {
+    "lat": 59.272844,
+    "lon": 15.2000734,
+    "precise": true
+  },
+  "Hökenbergsgränd 5, Orebro, Sweden": {
+    "lat": 59.2752626,
+    "lon": 15.2134105,
+    "precise": false
+  },
+  "Hökenbergsgränd 3, Orebro, Sweden": {
+    "lat": 59.2752626,
+    "lon": 15.2134105,
+    "precise": false
+  },
+  "Hertig Karls Allé 49a, Orebro, Sweden": {
+    "lat": 59.2793752,
+    "lon": 15.2006833,
+    "precise": true
+  },
+  "Slottsgatan 17b, Orebro, Sweden": {
+    "lat": 59.2764966,
+    "lon": 15.2172118,
+    "precise": true
+  },
+  "Gamlagatan 10, Orebro, Sweden": {
+    "lat": 59.27642969999999,
+    "lon": 15.2141667,
+    "precise": true
+  },
+  "Gamlagatan 12a, Orebro, Sweden": {
+    "lat": 59.276414,
+    "lon": 15.2142785,
+    "precise": true
+  },
+  "Svartå Bangatan 6, Orebro, Sweden": {
+    "lat": 59.26905259999999,
+    "lon": 15.1997966,
+    "precise": true
+  },
+  "Viktoriag 2, Orebro, Sweden": {
+    "lat": 59.2807259,
+    "lon": 15.2078857,
+    "precise": true
+  },
+  "Mäster Larsgatan 6a, Orebro, Sweden": {
+    "lat": 59.28348949999999,
+    "lon": 15.2219609,
+    "precise": true
+  },
+  "Badhusgatan 7, Orebro, Sweden": {
+    "lat": 59.27140300000001,
+    "lon": 15.2048641,
+    "precise": true
+  },
+  "Fredsgatan 17d, Orebro, Sweden": {
+    "lat": 59.27637489999999,
+    "lon": 15.2168202,
+    "precise": true
+  },
+  "Karlsgatan 2a, Orebro, Sweden": {
+    "lat": 59.2772261,
+    "lon": 15.2037259,
+    "precise": true
+  },
+  "Norra Lillåstrand 35b, Orebro, Sweden": {
+    "lat": 59.2811321,
+    "lon": 15.2272869,
+    "precise": true
+  },
+  "Norrgatan 45, Orebro, Sweden": {
+    "lat": 59.28201679999999,
+    "lon": 15.2066739,
+    "precise": true
+  },
+  "Norra Lillåstrand 31b, Orebro, Sweden": {
+    "lat": 59.2811762,
+    "lon": 15.2266038,
+    "precise": true
+  },
+  "Storgatan 9, Orebro, Sweden": {
+    "lat": 59.2759189,
+    "lon": 15.2146678,
+    "precise": true
+  },
+  "Karlslundsgatan 19b, Orebro, Sweden": {
+    "lat": 59.2740694,
+    "lon": 15.2012526,
+    "precise": true
+  },
+  "Västra Nobelg 37b, Orebro, Sweden": {
+    "lat": 59.28058840000001,
+    "lon": 15.1998416,
+    "precise": true
+  },
+  "Längbrotorg 1, 70366 Örebro, Sweden": {
+    "lat": 59.28226369999999,
+    "lon": 15.2242022,
+    "precise": true
+  },
+  "Manillagatan 21 B, 70212 Örebro, Sweden": {
+    "lat": 59.2693032,
+    "lon": 15.2187918,
+    "precise": true
+  },
+  "Ålholmsgatan 2, 70287 Örebro, Sweden": {
+    "lat": 59.26212400000001,
+    "lon": 15.2771378,
+    "precise": true
+  },
+  "Ålholmsgatan 4, 70287 Örebro, Sweden": {
+    "lat": 59.26230529999999,
+    "lon": 15.2771335,
+    "precise": true
+  },
+  "Ålholmsgatan 6, 70287 Örebro, Sweden": {
+    "lat": 59.26252470000001,
+    "lon": 15.2771016,
+    "precise": true
+  },
+  "Kristinagatan 14 A, 70214 Örebro, Sweden": {
+    "lat": 59.2686941,
+    "lon": 15.2291031,
+    "precise": true
+  },
+  "Kungsgatan 5, 63219 Eskilstuna, Sweden": {
+    "lat": 59.3694942,
+    "lon": 16.516499,
+    "precise": true
+  },
+  "Längbrogatan 25B, 70380 Örebro, Sweden": {
+    "lat": 59.2895765,
+    "lon": 15.2262419,
+    "precise": true
+  },
+  "Längbrotorg 3, 70366 Örebro, Sweden": {
+    "lat": 59.28277680000001,
+    "lon": 15.2244618,
+    "precise": false
+  },
+  "Mejeritorget 6A, 70380 Örebro, Sweden": {
+    "lat": 59.2889611,
+    "lon": 15.2255732,
+    "precise": true
+  },
+  "Mejerivägen 22, 70380 Örebro, Sweden": {
+    "lat": 59.2900782,
+    "lon": 15.2251586,
+    "precise": true
+  },
+  "Mejerivägen 28, 70380 Örebro, Sweden": {
+    "lat": 59.2900585,
+    "lon": 15.2261579,
+    "precise": true
+  },
+  "Rynningegatan 15B, 70365 Örebro, Sweden": {
+    "lat": 59.2819513,
+    "lon": 15.224051,
+    "precise": true
+  },
+  "Storbackavägen 5, 70242 Örebro, Sweden": {
+    "lat": 59.2523863,
+    "lon": 15.1968447,
+    "precise": true
+  },
+  "Tingslagsgatan 22, 70280 Örebro, Sweden": {
+    "lat": 59.2625137,
+    "lon": 15.2376321,
+    "precise": true
+  },
+  "Trädgårdsg. 11, 70212 Örebro, Sweden": {
+    "lat": 59.2699873,
+    "lon": 15.2172338,
+    "precise": true
+  },
+  "Trädgårdsgatan 3B, Örebro, Sweden": {
+    "lat": 59.2716489,
+    "lon": 15.2185166,
+    "precise": true
+  },
+  "Åstadalsvägen 5A, 70281 Örebro, Sweden": {
+    "lat": 59.2516655,
+    "lon": 15.2442421,
+    "precise": true
+  },
+  "Åstadalsvägen 5B, 70281 Örebro, Sweden": {
+    "lat": 59.2514923,
+    "lon": 15.244684,
+    "precise": true
+  },
+  "Åstadalsvägen 5C, 70281 Örebro, Sweden": {
+    "lat": 59.25198369999999,
+    "lon": 15.2442999,
+    "precise": true
+  },
+  "Engelbrektsg. 26, 70212 Örebro, Sweden": {
+    "lat": 59.2718813,
+    "lon": 15.2189396,
+    "precise": true
+  },
+  "Mejeritorget 4B, 70380 Örebro, Sweden": {
+    "lat": 59.288778,
+    "lon": 15.2253951,
+    "precise": true
+  },
+  "Rudbecksgatan 123, 70280 Örebro, Sweden": {
+    "lat": 59.2644521,
+    "lon": 15.2352612,
+    "precise": true
+  },
+  "Rudbecksgatan 143, 70280 Örebro, Sweden": {
+    "lat": 59.2636347,
+    "lon": 15.2362554,
+    "precise": true
+  },
+  "Storbackavägen 19, 70242 Örebro, Sweden": {
+    "lat": 59.2511635,
+    "lon": 15.1966529,
+    "precise": true
+  },
+  "Hertig Karls Allé 49a, Örebro, Sweden": {
+    "lat": 59.2841207,
+    "lon": 15.2025526,
+    "precise": true
+  },
+  "Slottsgatan 17b, Örebro, Sweden": {
+    "lat": 59.2764607,
+    "lon": 15.2171951,
+    "precise": true
+  },
+  "Gamlagatan 10, Örebro, Sweden": {
+    "lat": 59.278638,
+    "lon": 15.193617,
+    "precise": false
+  },
+  "Gamlagatan 12a, Örebro, Sweden": {
+    "lat": 59.278638,
+    "lon": 15.193617,
+    "precise": false
+  },
+  "Svartå Bangatan 6, Örebro, Sweden": {
+    "lat": 59.2690741,
+    "lon": 15.1999106,
+    "precise": true
+  },
+  "Viktoriag 2, Örebro, Sweden": {
+    "lat": 59.2823193,
+    "lon": 15.2100907,
+    "precise": true
+  },
+  "Mäster Larsgatan 6a, Örebro, Sweden": {
+    "lat": 59.2836738,
+    "lon": 15.2221186,
+    "precise": true
+  },
+  "Badhusgatan 7, Örebro, Sweden": {
+    "lat": 59.2713828,
+    "lon": 15.2049826,
+    "precise": true
+  },
+  "Fredsgatan 17d, Örebro, Sweden": {
+    "lat": 59.2764347,
+    "lon": 15.2166297,
+    "precise": true
+  },
+  "Karlsgatan 2a, Örebro, Sweden": {
+    "lat": 59.2773412,
+    "lon": 15.1930288,
+    "precise": true
+  },
+  "Norra Lillåstrand 35b, Örebro, Sweden": {
+    "lat": 59.2830997,
+    "lon": 15.2186244,
+    "precise": true
+  },
+  "Norrgatan 45, Örebro, Sweden": {
+    "lat": 59.2826322,
+    "lon": 15.2070316,
+    "precise": true
+  },
+  "Norra Lillåstrand 31b, Örebro, Sweden": {
+    "lat": 59.2830997,
+    "lon": 15.2186244,
+    "precise": true
+  },
+  "Storgatan 9, Örebro, Sweden": {
+    "lat": 59.27587,
+    "lon": 15.2147047,
+    "precise": true
+  },
+  "Karlslundsgatan 19b, Örebro, Sweden": {
+    "lat": 59.2760571,
+    "lon": 15.1807655,
+    "precise": true
+  },
+  "Västra Nobelg 37b, Örebro, Sweden": {
+    "lat": 59.2804639,
+    "lon": 15.2073476,
+    "precise": true
+  },
+  "Kungsgatan 5, 63219 Örebro, Sweden": {
+    "lat": 59.3807576,
+    "lon": 16.4871854,
+    "precise": true
+  },
+  "Brygghusgatan 10, 2rok. Uteplats, Örebro, Sweden": {
+    "lat": 59.2572601,
+    "lon": 15.2127259,
+    "precise": true
+  },
+  "Brygghusgatan 14, Örebro, Sweden": {
+    "lat": 59.2572601,
+    "lon": 15.2127259,
+    "precise": true
+  },
+  "Folkungagatan 5C, Örebro, Sweden": {
+    "lat": 59.2723208,
+    "lon": 15.1981968,
+    "precise": true
+  },
+  "Gustavsviksvägen 1A, Örebro, Sweden": {
+    "lat": 59.2566276,
+    "lon": 15.1867761,
+    "precise": true
+  },
+  "Hagagatan 34B, Örebro, Sweden": {
+    "lat": 59.2720108,
+    "lon": 15.1976894,
+    "precise": true
+  },
+  "Järnvägsgatan 11B, Örebro, Sweden": {
+    "lat": 59.2777845,
+    "lon": 15.2157794,
+    "precise": true
+  },
+  "Järnvägsgatan 13A, Örebro, Sweden": {
+    "lat": 59.2776493,
+    "lon": 15.2164197,
+    "precise": true
+  },
+  "Järnvägsgatan 9, Örebro, Sweden": {
+    "lat": 59.2773531,
+    "lon": 15.2185037,
+    "precise": false
+  },
+  "Kungsgatan 9, Örebro, Sweden": {
+    "lat": 59.270983,
+    "lon": 15.2147051,
+    "precise": true
+  },
+  "Lillbackavägen 19, Örebro, Sweden": {
+    "lat": 59.2537772,
+    "lon": 15.1949102,
+    "precise": true
+  },
+  "Lövstagatan 32, Örebro, Sweden": {
+    "lat": 59.2826219,
+    "lon": 15.2043331,
+    "precise": true
+  },
+  "Nygatan 20A, Örebro, Sweden": {
+    "lat": 59.2709978,
+    "lon": 15.2095303,
+    "precise": true
+  },
+  "Rudbecksgatan 5, Örebro, Sweden": {
+    "lat": 59.2708399,
+    "lon": 15.2060352,
+    "precise": true
+  },
+  "Storgatan 51, Örebro, Sweden": {
+    "lat": 59.2828382,
+    "lon": 15.2203898,
+    "precise": true
+  },
+  "Storgatan 53, Örebro, Sweden": {
+    "lat": 59.2830107,
+    "lon": 15.2203962,
+    "precise": true
+  },
+  "Sörbyängsvägen 14B Studentlägenhet, Örebro, Sweden": {
+    "lat": 59.2520738,
+    "lon": 15.2263361,
+    "precise": true
+  },
+  "Tärnvägen 26 Studentlägenhet, Örebro, Sweden": {
+    "lat": 59.2583769,
+    "lon": 15.2583151,
+    "precise": true
+  },
+  "Tärnvägen 4 I Studentlägenhet, Örebro, Sweden": {
+    "lat": 59.2583769,
+    "lon": 15.2583151,
+    "precise": true
+  },
+  "Åstadalsvägen 1E Studentlägenhet, Örebro, Sweden": {
+    "lat": 59.2453601,
+    "lon": 15.2443597,
+    "precise": true
+  },
+  "Norrgatan 33, Örebro, Sweden": {
+    "lat": 59.2826322,
+    "lon": 15.2070316,
+    "precise": true
+  }
+}
