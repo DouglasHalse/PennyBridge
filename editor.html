@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PennyBridge — Location Editor</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; height: 100vh; overflow: hidden; }
+        #app { display: flex; height: 100vh; }
+        #sidebar {
+            width: 340px; min-width: 340px; background: #1a1a2e; color: #fff;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-header { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header h1 { font-size: 1rem; }
+        .sidebar-header p { font-size: 0.7rem; opacity: 0.6; margin-top: 4px; }
+        .toolbar { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 8px; }
+        .btn {
+            padding: 6px 14px; border: none; border-radius: 4px; font-size: 0.8rem;
+            font-weight: 600; cursor: pointer; transition: background 0.15s;
+        }
+        .btn-save { background: #2ecc71; color: #fff; }
+        .btn-save:hover { background: #27ae60; }
+        .btn-clear { background: #e74c3c; color: #fff; }
+        .btn-clear:hover { background: #c0392b; }
+        .btn-undo { background: #3498db; color: #fff; }
+        .btn-undo:hover { background: #2980b9; }
+        .btn-search { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-search:hover { background: rgba(255,255,255,0.2); }
+        #searchInput { flex: 1; padding: 6px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: rgba(255,255,255,0.1); color: #fff; font-size: 0.8rem; }
+        #searchInput::placeholder { color: rgba(255,255,255,0.4); }
+        .selected-info { padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; }
+        .selected-info strong { display: block; margin-bottom: 2px; }
+        .selected-info .coords { color: #3498db; cursor: pointer; }
+        .selected-info .coords:hover { text-decoration: underline; }
+        #changelog {
+            flex: 1; overflow-y: auto; padding: 8px 16px; font-size: 0.72rem;
+        }
+        #changelog h3 { font-size: 0.75rem; text-transform: uppercase; opacity: 0.5; margin-bottom: 6px; }
+        .change-entry {
+            padding: 6px 8px; margin-bottom: 4px; background: rgba(255,255,255,0.05);
+            border-radius: 4px; font-size: 0.7rem; line-height: 1.4;
+        }
+        .change-entry .old { color: #e74c3c; }
+        .change-entry .new { color: #2ecc71; }
+        .change-entry .arrow { color: #f39c12; }
+        .stats { padding: 8px 16px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.65rem; opacity: 0.5; }
+        #map { flex: 1; }
+        .search-results {
+            max-height: 200px; overflow-y: auto; margin-top: 4px;
+        }
+        .search-result {
+            padding: 6px 10px; cursor: pointer; font-size: 0.72rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .search-result:hover { background: rgba(255,255,255,0.1); }
+        .search-result .badge {
+            display: inline-block; padding: 1px 5px; border-radius: 2px;
+            font-size: 0.6rem; font-weight: 700; margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <h1>📍 Location Editor</h1>
+                <p>Drag markers to fix incorrect positions. Save when done.</p>
+            </div>
+            <div class="toolbar">
+                <input type="text" id="searchInput" placeholder="Search address..." oninput="searchListings()">
+            </div>
+            <div id="searchResults" class="search-results"></div>
+            <div id="selectedInfo" class="selected-info" style="display:none">
+                <strong id="selName">—</strong>
+                <span id="selLandlord"></span>
+                <span class="coords" id="selCoords" onclick="copyCoords()"></span>
+            </div>
+            <div id="changelog">
+                <h3>Changes</h3>
+                <div id="changeList"></div>
+            </div>
+            <div class="toolbar" style="border-top:1px solid rgba(255,255,255,0.1);border-bottom:none;">
+                <button class="btn btn-undo" onclick="undoLast()" title="Undo last">↩ Undo</button>
+                <button class="btn btn-clear" onclick="clearChanges()" title="Clear all changes">✕ Clear</button>
+                <button class="btn btn-save" onclick="saveChanges()" title="Download updated JSON">💾 Save</button>
+            </div>
+            <div class="stats" id="stats">Loading...</div>
+        </aside>
+        <main id="map"></main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const MAP_CENTER = [59.275, 15.213];
+        const LANDLORD_COLORS = {
+            'obo': '#cf0035', 'ragnfast': '#224b91', 'soderberg': '#862633',
+            'pgj': '#2e7d32', 'husherren': '#e65100', 'behrn': '#1b232d',
+            'egeryds': '#6a1b9a', 'heimstaden': '#00558b'
+        };
+        const LANDLORD_NAMES = {
+            'obo': 'Örebrobostäder', 'ragnfast': 'Ragnfast', 'soderberg': 'Söderberg',
+            'pgj': 'PG Jönsson', 'husherren': 'Husherren', 'behrn': 'Behrn',
+            'egeryds': 'Egeryds', 'heimstaden': 'Heimstaden'
+        };
+
+        let allData, allMarkers = [], changes = [], selectedMarker = null, existingOverrides = {};
+
+        async function init() {
+            map = L.map('map', { center: MAP_CENTER, zoom: 14 });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap', maxZoom: 19
+            }).addTo(map);
+
+            try {
+                const r = await fetch('data/listings.json');
+                allData = await r.json();
+                // Load existing overrides if available
+                try {
+                    const or = await fetch('data/coordinate-overrides.json');
+                    if (or.ok) existingOverrides = await or.json();
+                } catch(e) {}
+                // Apply existing overrides to data
+                if (existingOverrides) {
+                    for (const [addr, coords] of Object.entries(existingOverrides)) {
+                        const match = allData.listings.filter(l => l.geocodeQuery && l.geocodeQuery.replace('Orebro','Örebro').includes(addr.split(',')[0]));
+                        match.forEach(l => { l.lat = coords[0]; l.lon = coords[1]; l.precise = true; });
+                    }
+                }
+                document.getElementById('stats').textContent =
+                    `${allData.total} listings · ${allData.geocoded} geocoded · ${Object.keys(existingOverrides).length} overrides`;
+                addAllMarkers();
+            } catch(e) {
+                document.getElementById('stats').textContent = 'Error loading data: ' + e.message;
+            }
+        }
+
+        function addAllMarkers() {
+            // Group listings by normalized geocode query
+            const groups = {};
+            allData.listings.forEach(listing => {
+                if (!listing.lat || !listing.lon) return;
+                const key = (listing.geocodeQuery || '').replace('Orebro', 'Örebro').replace(' ,', ',').trim();
+                if (!groups[key]) groups[key] = [];
+                groups[key].push(listing);
+            });
+
+            Object.entries(groups).forEach(([key, listings]) => {
+                const first = listings[0];
+                const color = LANDLORD_COLORS[first.source] || '#888';
+                const count = listings.length;
+                const size = count > 1 ? 20 : 16;
+                const label = count > 1 ? `<span style="position:absolute;top:-6px;right:-6px;background:#fff;color:#333;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;line-height:16px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.3);">${count}</span>` : '';
+
+                const icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.4);cursor:pointer;position:relative;">${label}</div>`,
+                    iconSize: [size,size], iconAnchor: [size/2,size/2]
+                });
+                const marker = L.marker([first.lat, first.lon], { icon, draggable: true });
+                marker._originalIcon = icon;
+                marker.listing = first;
+                marker.listingGroup = listings;
+                marker.addrKey = key;
+                const landlordNames = [...new Set(listings.map(l => LANDLORD_NAMES[l.source] || l.source))];
+                marker.bindPopup(`<b>${first.displayName}</b>${count > 1 ? '<br>'+count+' listings' : ''}<br>${landlordNames.join(', ')}`);
+                marker.on('click', () => selectMarker(marker));
+                marker.on('dragend', () => onMarkerMoved(marker));
+                marker.addTo(map);
+                allMarkers.push(marker);
+            });
+        }
+
+        function selectMarker(marker) {
+            if (selectedMarker && selectedMarker !== marker) {
+                selectedMarker.setIcon(selectedMarker._originalIcon);
+            }
+            selectedMarker = marker;
+            const l = marker.listing;
+            document.getElementById('selectedInfo').style.display = 'block';
+            document.getElementById('selName').textContent = l.displayName;
+            document.getElementById('selLandlord').textContent =
+                `${LANDLORD_NAMES[l.source] || l.source} · ${l.type || ''}`;
+            document.getElementById('selCoords').textContent =
+                `${l.lat.toFixed(6)}, ${l.lon.toFixed(6)}`;
+            marker.openPopup();
+        }
+
+        function onMarkerMoved(marker) {
+            const newPos = marker.getLatLng();
+            const oldLat = marker.listing.lat, oldLon = marker.listing.lon;
+            // Apply to ALL listings at this address
+            (marker.listingGroup || [marker.listing]).forEach(l => {
+                l.lat = newPos.lat;
+                l.lon = newPos.lng;
+                l.precise = true;
+            });
+            const count = (marker.listingGroup || [marker.listing]).length;
+
+            const entry = {
+                id: marker.addrKey,
+                name: marker.listing.displayName + (count > 1 ? ` (+${count-1} more)` : ''),
+                source: marker.listing.source,
+                oldLat, oldLon,
+                newLat: newPos.lat, newLon: newPos.lng,
+                time: new Date().toISOString()
+            };
+
+            const existing = changes.find(c => c.id === marker.addrKey);
+            if (existing) {
+                existing.newLat = newPos.lat;
+                existing.newLon = newPos.lng;
+            } else {
+                changes.push(entry);
+            }
+            updateChangelog();
+            document.getElementById('selCoords').textContent =
+                `${newPos.lat.toFixed(6)}, ${newPos.lon.toFixed(6)}`;
+            document.getElementById('stats').textContent =
+                `${allData.total} listings · ${changes.length} changed`;
+        }
+
+        function updateChangelog() {
+            const list = document.getElementById('changeList');
+            if (changes.length === 0) {
+                list.innerHTML = '<p style="opacity:0.3;font-style:italic;">No changes yet. Drag a marker to start.</p>';
+                return;
+            }
+            list.innerHTML = changes.slice().reverse().map((c, i) => `
+                <div class="change-entry">
+                    <strong>${c.name}</strong><br>
+                    <span class="old">${c.oldLat.toFixed(5)}, ${c.oldLon.toFixed(5)}</span>
+                    <span class="arrow">→</span>
+                    <span class="new">${c.newLat.toFixed(5)}, ${c.newLon.toFixed(5)}</span>
+                </div>
+            `).join('');
+            document.getElementById('stats').textContent =
+                `${allData.total} listings · ${changes.length} changed`;
+        }
+
+        function undoLast() {
+            const last = changes.pop();
+            if (!last) return;
+            const marker = allMarkers.find(m => m.addrKey === last.id);
+            if (marker) {
+                (marker.listingGroup || [marker.listing]).forEach(l => {
+                    l.lat = last.oldLat;
+                    l.lon = last.oldLon;
+                });
+                marker.setLatLng([last.oldLat, last.oldLon]);
+            }
+            updateChangelog();
+        }
+
+        function clearChanges() {
+            if (!confirm('Clear all changes?')) return;
+            changes.forEach(c => {
+                const marker = allMarkers.find(m => m.addrKey === c.id);
+                if (marker) {
+                    (marker.listingGroup || [marker.listing]).forEach(l => {
+                        l.lat = c.oldLat;
+                        l.lon = c.oldLon;
+                    });
+                    marker.setLatLng([c.oldLat, c.oldLon]);
+                }
+            });
+            changes = [];
+            updateChangelog();
+        }
+
+        function saveChanges() {
+            if (changes.length === 0) {
+                alert('No changes to save.');
+                return;
+            }
+            const overrides = {...existingOverrides};
+            changes.forEach(c => {
+                overrides[c.id] = [c.newLat, c.newLon];
+                // Apply to all listings at this address
+                allData.listings.forEach(l => {
+                    const key = (l.geocodeQuery || '').replace('Orebro', 'Örebro').replace(' ,', ',').trim();
+                    if (key === c.id) {
+                        l.lat = c.newLat;
+                        l.lon = c.newLon;
+                        l.precise = true;
+                    }
+                });
+            });
+            const blob = new Blob([JSON.stringify(overrides, null, 2)], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'coordinate-overrides.json';
+            a.click();
+            existingOverrides = overrides;
+            changes = [];
+            updateChangelog();
+            document.getElementById('stats').textContent =
+                `${allData.total} listings · ${allData.geocoded} geocoded · ${Object.keys(overrides).length} overrides`;
+        }
+
+        function copyCoords() {
+            const t = document.getElementById('selCoords').textContent;
+            navigator.clipboard.writeText(t);
+        }
+
+        function searchListings() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('searchResults');
+            if (q.length < 2) { container.innerHTML = ''; return; }
+            const results = allData.listings.filter(l =>
+                l.displayName.toLowerCase().includes(q)
+            ).slice(0, 20);
+            container.innerHTML = results.map(l => {
+                const color = LANDLORD_COLORS[l.source] || '#888';
+                return `<div class="search-result" onclick="flyToListing('${l.id}')">
+                    <span class="badge" style="background:${color}">${l.source}</span>
+                    ${l.displayName}
+                </div>`;
+            }).join('');
+        }
+
+        function flyToListing(id) {
+            const listing = allData.listings.find(l => l.id === id);
+            if (!listing) return;
+            const key = (listing.geocodeQuery || '').replace('Orebro', 'Örebro').replace(' ,', ',').trim();
+            const marker = allMarkers.find(m => m.addrKey === key);
+            if (marker) {
+                map.setView(marker.getLatLng(), 17);
+                selectMarker(marker);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
